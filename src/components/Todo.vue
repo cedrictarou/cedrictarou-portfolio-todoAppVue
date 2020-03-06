@@ -1,9 +1,15 @@
 <template>
-  <b-col sm=6 md=4 lg=3>
-   <b-card>
-     <b-card-text>
-       <slot></slot>
-     </b-card-text>
-   </b-card>
-  </b-col>
+  <b-card-group deck>
+    <b-card>
+      <b-card-text>
+        <slot></slot>
+      </b-card-text>
+    </b-card> 
+  </b-card-group>
 </template>
+<style scoped>
+.card-body {
+  padding: 0.5rem;
+}
+
+</style>

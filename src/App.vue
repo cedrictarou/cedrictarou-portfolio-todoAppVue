@@ -3,9 +3,6 @@
         <app-header :todoCount="todos.length" :maxTodos="maxTodos"></app-header>
         <app-new-todo class="mt-2" @todoAdded="newTodo"></app-new-todo>        
         <app-todo-grid class="mt-2" :todos="todos" @todoDeleted="deletedTodo"></app-todo-grid>
-        <b-col sm=12 class="text-center mt-2" >
-            <b-alert show>Info: Click on a todo to Delete it!</b-alert>
-        </b-col>
     </b-container>
 </template>
 
@@ -13,6 +10,7 @@
     import TodoGrid from './components/TodoGrid.vue';
     import NewTodo from './components/NewTodo.vue';
     import Header from './components/Header.vue';
+
     export default {
         data:function() {
             return {
@@ -36,7 +34,7 @@
         components: {
             appTodoGrid: TodoGrid,
             appNewTodo: NewTodo,
-            appHeader: Header
+            appHeader: Header,
         }
     }
 </script>

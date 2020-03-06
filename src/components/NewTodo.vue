@@ -21,8 +21,12 @@
     },
     methods: {
       createNew() {
-        this.$emit('todoAdded', this.todo);
-        this.todo = '';
+        if(this.todo !== '') {
+          this.$emit('todoAdded', this.todo);
+          this.todo = '';
+        } else {
+          alert('Please add something to do');
+        }
       }
     }
   }

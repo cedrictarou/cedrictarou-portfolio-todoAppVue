@@ -1,18 +1,28 @@
 <template>
   <div>
-   <b-progress height="2rem" :max="maxTodos" show-progress animated>
-    <b-progress-bar :value="todoCount" :label="`${((todoCount / maxTodos) * 100).toFixed(0)}%`"></b-progress-bar>
+    <p>See your progress</p>
+   <b-progress height="2rem" :max="allTodos.length" show-progress animated>
+    <b-progress-bar :value="remaining" :label="`${((remaining / allTodos.length) * 100).toFixed(0)}%`"></b-progress-bar>
    </b-progress>
   </div>
 </template>
 <script>
   export default {
-    props: ['todoCount', 'maxTodos'],
     data() {
       return {
         value: '',
-        max: 100
       }
+    },
+    computed: {
+      allTodos() {
+        return this.$store.state.allTodos
+      },
+      remaining() {
+        let items = this.allTodos.filter(function(todo) {
+          return !todo.isDone;
+        });
+        return this.allTodos.length - items.length;
+      } 
     },
   }
 </script>

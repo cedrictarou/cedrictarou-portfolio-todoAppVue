@@ -1,14 +1,12 @@
 <template>
   <div>
-    <label>Todo:</label>
-    <b-form-textarea
-      id="textarea"
+    <p>Just type what you have to do.</p>
+    <b-form-input
+      id="input1"
       v-model="todo"
-      placeholder="Enter something to do..."
-      rows="2"
-      max-rows="3"
-    ></b-form-textarea>
-    <b-btn class="mt-2" variant="outline-primary" @click="createNew">Add Todo</b-btn>
+      placeholder="Enter something to do..., and hit Enter!"
+      @keyup.enter="newTodo()"
+    ></b-form-input>
   </div>
 </template>
 
@@ -20,14 +18,15 @@
       }
     },
     methods: {
-      createNew() {
-        if(this.todo !== '') {
-          this.$emit('todoAdded', this.todo);
-          this.todo = '';
-        } else {
-          alert('Please add something to do');
-        }
-      }
+      newTodo() {
+        const todo = {
+          text: this.todo,
+          isDone: false,
+          day: 'none'
+        };
+        this.$store.state.allTodos.push(todo);
+        this.todo = '';
+      },
     }
   }
 </script>

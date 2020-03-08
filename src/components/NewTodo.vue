@@ -1,11 +1,14 @@
 <template>
   <div>
-    <p>Just type what you have to do.</p>
+    <div>
+      <h3>Just type what you have to do.</h3>
+      <p>頭に思いつくままにタスクを入力しましょう。</p>
+    </div>
     <b-form-input
       id="input1"
       v-model="todo"
       placeholder="Enter something to do..., and hit Enter!"
-      @keyup.enter="newTodo()"
+      @keypress="newTodo()"
     ></b-form-input>
   </div>
 </template>
@@ -14,7 +17,7 @@
   export default {
     data() {
       return {
-        todo: ''
+        todo: '',
       }
     },
     methods: {

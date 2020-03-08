@@ -1,6 +1,7 @@
 <template>
-<div>
-  <h3>Tasks of each day</h3>
+<div class="mt-2">
+  <h3 class="text-left">Tasks of each day</h3>
+  <p>タスクを移動させて優先順位を決めましょう。左にくるほど重要です。</p>
   <div class="row pt-2 pb-2">
     <table class="table table-striped">
       <thead>

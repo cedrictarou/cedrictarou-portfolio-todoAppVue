@@ -3,8 +3,7 @@
   <div>
     <h3>Your Todo Lists</h3>
     <p>やるべきタスクをドラッグアンドドロップで曜日に振り分けましょう。</p>
-    <b-button class="ml-2 btn-purge" size="sm" variant="outline-primary"
-    @click="purge">Purge</b-button>
+    
   </div>
   <b-row>
     <b-col sm=12 class="text-center mt-2">
@@ -51,7 +50,5 @@ export default {
 };
 </script>
 <style scoped>
-.btn-purge {
-  float: right;
-}
+
 </style>

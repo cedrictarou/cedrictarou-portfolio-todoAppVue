@@ -11,7 +11,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="day in days" :key="day.id">
+        <tr v-for="day in days" :key="day.id" @change="log">
           <th scope="row">{{ day }}</th>
           <td>
             <app-week-day-todo></app-week-day-todo>
@@ -25,7 +25,6 @@
 <script>
 import WeekDayTodo from "./WeekDayTodo.vue";
 export default {
-  // order: 1,
   components: {
     appWeekDayTodo: WeekDayTodo,
   },
@@ -34,14 +33,29 @@ export default {
       days: ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
     };
   },
+  computed: {
+    allTodos() {
+      return this.$store.state.allTodos;
+    },
+    remaining() {
+      return this.allTodos.filter(function(todo) {
+        return !todo.isDone;
+      });
+    } 
+  },
   methods: {
     deleteTodo(index) {
       this.$store.state.allTodos.splice(index, 1);
     },
+    log: function(evt) {
+      window.console.log(evt);
+      console.log( "allTodos", this.allTodos);
+      console.log( "dayTodos", this.dayTodos);
+    },
   }
 };
 </script>
-<style>
+<style lang="scss" scoped>
 .item {
   display: inline-block;
 }

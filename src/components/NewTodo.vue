@@ -8,7 +8,9 @@
       id="input1"
       v-model="todo"
       placeholder="Enter something to do..., and hit Enter!"
-      @keypress="newTodo()"
+      @keydown.enter="newTodo()"
+      @compositionstart="composing=true"
+      @compositionend="composing=false"
     ></b-form-input>
   </div>
 </template>
@@ -18,10 +20,15 @@
     data() {
       return {
         todo: '',
+        composing: false,
       }
     },
     methods: {
       newTodo() {
+        // 入力を終えて、エンターを押したら発火するように調整
+        if(this.composing) {
+          return ;
+        } 
         const todo = {
           text: this.todo,
           isDone: false,

@@ -1,6 +1,6 @@
 <template>
   <b-card-group deck>
-    <draggable :list="dayTodos" group="myTodos"  @start="drag=true" @end="drag=false" :options="options" @change="log">
+    <draggable :list="dayTodos" group="myTodos"  @start="drag=true" @end="onEnd" :options="options" @change="log">
       <b-card class="item" v-for="(dayTodo, index) in dayTodos" :key="dayTodo.id">
         <b-card-text>
           <input type="checkbox" v-model="dayTodo.isDone">
@@ -36,11 +36,16 @@ export default {
   methods: {
     log: function(evt) {
       window.console.log(evt);
-      console.log( "allTodos", this.allTodos);
+      // console.log( "allTodos", this.allTodos);
+      // console.log( "dayTodos", this.dayTodos);
     },
     deleteTodo(index) {
       this.dayTodos.splice(index, 1);
     },
+    // onEnd: function() {
+    //   alert('Moved!!');
+    //   this.dayTodos.push(this.allTodos);
+    // },
   }
 };
 </script>

@@ -10,5 +10,11 @@ export default new Vuex.Store({
     ],
     dayTodos: [],
   },
+  getters: {
+    //allTodosの内チェックされたものだけの配列
+    remaining: state => state.dayTodos.filter(function (todo) {
+      return !todo.isDone;
+    })
+  }
   
 })

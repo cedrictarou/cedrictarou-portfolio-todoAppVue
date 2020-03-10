@@ -37,29 +37,11 @@ export default {
     allTodos() {
       return this.$store.state.allTodos;
     },
-    remaining() {
-      return this.allTodos.filter(function(todo) {
-        return !todo.isDone;
-      });
-    } 
   },
-  methods: {
-    deleteTodo(index) {
-      this.$store.state.allTodos.splice(index, 1);
-    },
-    log: function(evt) {
-      window.console.log(evt);
-      console.log( "allTodos", this.allTodos);
-      console.log( "dayTodos", this.dayTodos);
-    },
-  }
 };
 </script>
 <style lang="scss" scoped>
-.item {
-  display: inline-block;
-}
-.done {
+span.done {
   text-decoration: line-through;
   color: #bbb;
 }

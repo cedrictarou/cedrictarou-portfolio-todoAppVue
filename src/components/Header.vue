@@ -21,10 +21,7 @@
         return this.$store.state.allTodos
       },
       remaining() {
-        let items = this.allTodos.filter(function(todo) {
-          return !todo.isDone;
-        });
-        return this.allTodos.length - items.length;
+        return this.$store.getters.remaining;
       } 
     },
   }

@@ -11,18 +11,18 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="day in week" :key="day.id">
+        <tr v-for="(day, idx) in week" :key="day.id">
           <th scope="row">{{ day.dayNum }}</th>
           <td>
             <b-card-group deck>
-              <draggable :tasks="week" group="myTodos" @start="drag=true" @end="onEnd" :options="options">
+              <draggable :tasks="week" group="myTodos" @start="drag=true" @end="onEnd(idx, index)" :options="options">
                 <b-card class="item" v-for="(dayTodo, index) in day.dayTodos" :key="dayTodo.id">
                     <b-card-text>
                       <input type="checkbox" v-model="dayTodo.isDone">
                       <span :class="{done: dayTodo.isDone}">
-                      {{ index +1 }} {{ dayTodo.name }}
+                      {{ index +1 }} {{ dayTodo.text }}
                       </span>
-                      <span @click="deleteTodo(index)"><b-icon icon="x"></b-icon></span>
+                      <span @click="deleteTodo(idx, index)"><b-icon icon="x"></b-icon></span>
                     </b-card-text>
                 </b-card>
               </draggable>
@@ -49,22 +49,28 @@ export default {
         animation: 200
       },
       week: [
-        {dayNum: 0, dayTodos: [{name: 'task',isDone: false}, {name: 'task',isDone: false}]},
-        {dayNum: 1, dayTodos: [{name: 'task',isDone: false}]},
-        {dayNum: 3, dayTodos: [{name: 'task',isDone: false}]},
-        {dayNum: 4, dayTodos: [{name: 'task',isDone: false}]},
-        {dayNum: 5, dayTodos: [{name: 'task',isDone: false}]},
-        {dayNum: 6, dayTodos: [{name: 'task',isDone: false}]},
+        {dayNum: 0, dayTodos: [{text: 'task',isDone: false}, {text: 'task',isDone: false}]},
+        {dayNum: 1, dayTodos: []},
+        {dayNum: 2, dayTodos: []},
+        {dayNum: 3, dayTodos: []},
         ],
     };
   },
+  computed: {
+    allTodos() {
+      return this.$store.state.allTodos;
+    }
+  },
   methods: {
-    deleteTodo(index) {
+    deleteTodo(idx, index) {
       if(confirm('Are you sure?')) {
-        console.log(index);
-        // this.week.dayTodos.splice(index, 1);
-        console.log(this.week.dayTodos[0]);
+        this.week[idx].dayTodos.splice(index, 1);
       }
+    },
+    onEnd(idx) {
+      console.log(this.$store.state.allTodos[0]);
+      let todo = this.$store.state.allTodos[0];
+      this.week[idx].dayTodos.push(todo);
     }
   }
 };

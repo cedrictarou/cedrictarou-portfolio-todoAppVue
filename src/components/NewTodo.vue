@@ -32,7 +32,6 @@
         const todo = {
           text: this.todo,
           isDone: false,
-          day: 'none'
         };
         this.$store.state.allTodos.push(todo);
         this.todo = '';

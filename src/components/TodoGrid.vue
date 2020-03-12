@@ -32,11 +32,11 @@ export default {
     allTodos() {
       return this.$store.state.allTodos;
     },
-    remaining() {
-      return this.allTodos.filter(function(todo) {
-        return !todo.isDone;
-      });
-    } 
+    // remaining() {
+    //   return this.allTodos.filter(function(todo) {
+    //     return !todo.isDone;
+    //   });
+    // } 
   },
   methods: {
     purge() {

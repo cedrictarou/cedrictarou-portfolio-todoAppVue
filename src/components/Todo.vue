@@ -1,9 +1,9 @@
 <template>
   <b-card-group deck>
-    <draggable :list="allTodos" group="myTodos"  @start="drag=true" @end="drag=false" :options="options" @change="log">
-      <b-card class="item mr-1 mt-1" v-for="todo in allTodos" :key="todo.id">
+    <draggable :list="allTodos" group="myTodos" @start="drag=true" @end="onEnd(index)" :options="options">
+      <b-card class="item mr-1 mt-1" v-for="(todo, index) in allTodos" :key="todo.id">
         <b-card-text>
-            {{ todo.text }}
+            {{ index +1 }} {{ todo.text }}
         </b-card-text>
       </b-card> 
     </draggable>
@@ -30,10 +30,13 @@ export default {
     }
   },
   methods: {
-    // log: function(evt) {
-    //   window.console.log(evt);
-    //   console.log(this.allTodos);
-    // },
+    onEnd(index) {
+      console.log(this.allTodos[index]);
+      // let todo = this.allTodos[index];
+      // this.week[0].dayTodos.push(todo);
+      // console.log(this.allTodos[0]);
+
+    }
   }
 };
 </script>

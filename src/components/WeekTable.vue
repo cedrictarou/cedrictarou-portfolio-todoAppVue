@@ -11,10 +11,22 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="day in days" :key="day.id" @change="log">
-          <th scope="row">{{ day }}</th>
+        <tr v-for="day in week" :key="day.id">
+          <th scope="row">{{ day.dayNum }}</th>
           <td>
-            <app-week-day-todo></app-week-day-todo>
+            <b-card-group deck>
+              <draggable :tasks="week" group="myTodos" @start="drag=true" @end="onEnd" :options="options">
+                <b-card class="item" v-for="(dayTodo, index) in day.dayTodos" :key="dayTodo.id">
+                    <b-card-text>
+                      <input type="checkbox" v-model="dayTodo.isDone">
+                      <span :class="{done: dayTodo.isDone}">
+                      {{ index +1 }} {{ dayTodo.name }}
+                      </span>
+                      <span @click="deleteTodo(index)"><b-icon icon="x"></b-icon></span>
+                    </b-card-text>
+                </b-card>
+              </draggable>
+            </b-card-group>
           </td>
         </tr>
       </tbody>
@@ -23,26 +35,62 @@
 </div>
 </template>
 <script>
-import WeekDayTodo from "./WeekDayTodo.vue";
+// import WeekDayTodo from "./WeekDayTodo.vue";
+import draggable from "vuedraggable";
 export default {
   components: {
-    appWeekDayTodo: WeekDayTodo,
+    // appWeekDayTodo: WeekDayTodo,
+    draggable,
   },
   data() {
     return {
-      days: ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
+      options: {
+        group: "myTodos",
+        animation: 200
+      },
+      week: [
+        {dayNum: 0, dayTodos: [{name: 'task',isDone: false}, {name: 'task',isDone: false}]},
+        {dayNum: 1, dayTodos: [{name: 'task',isDone: false}]},
+        {dayNum: 3, dayTodos: [{name: 'task',isDone: false}]},
+        {dayNum: 4, dayTodos: [{name: 'task',isDone: false}]},
+        {dayNum: 5, dayTodos: [{name: 'task',isDone: false}]},
+        {dayNum: 6, dayTodos: [{name: 'task',isDone: false}]},
+        ],
     };
   },
-  computed: {
-    allTodos() {
-      return this.$store.state.allTodos;
-    },
-  },
+  methods: {
+    deleteTodo(index) {
+      if(confirm('Are you sure?')) {
+        console.log(index);
+        // this.week.dayTodos.splice(index, 1);
+        console.log(this.week.dayTodos[0]);
+      }
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
 span.done {
   text-decoration: line-through;
   color: #bbb;
+}
+card-deck {
+  min-height: 40px;
+}
+span.done {
+  text-decoration: line-through;
+  color: #bbb;
+}
+.card-body {
+  padding: 0.5rem;
+}
+.item {
+  display: inline-block;
+  &:hover {
+  cursor: grab;
+  }
+  &:active {
+    cursor: grabbing;
+  }
 }
 </style>

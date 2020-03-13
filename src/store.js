@@ -8,13 +8,19 @@ export default new Vuex.Store({
     allTodos: [
       { text: 'Just a thing to see.', isDone: false},
     ],
-    // dayTodos: [],
+    week: [
+      {dayNum: 0, dayTodos: [{text: 'task',isDone: false}, {text: 'task',isDone: false}]},
+      {dayNum: 1, dayTodos: [{text: 'task',isDone: false}]},
+      {dayNum: 2, dayTodos: [{text: 'task',isDone: false}]},
+      {dayNum: 3, dayTodos: [{text: 'task',isDone: false}]},
+    ],
   },
-  // getters: {
-  //   //allTodosの内チェックされたものだけの配列
-  //   remaining: state => state.dayTodos.filter(function (todo) {
-  //     return !todo.isDone;
-  //   })
-  // }
+  getters: {
+    //allTodosの内チェックされたものだけの配列
+    doneTodos: state => state.week[0].dayTodos.filter(function (todo) {
+      return todo.isDone;
+    }),
+    dayTodos: state => state.week[0].dayTodos
+  }
   
 })

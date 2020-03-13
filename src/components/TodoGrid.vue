@@ -25,7 +25,7 @@ export default {
       options: {
         group: "myTodos",
         animation: 200
-      }
+      },
     }
   },
   computed: {

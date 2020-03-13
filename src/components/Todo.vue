@@ -1,9 +1,20 @@
 <template>
   <b-card-group deck>
-    <draggable :list="allTodos" group="myTodos" @start="drag=true" @end="onEnd(index)" :options="options">
-      <b-card class="item mr-1 mt-1" v-for="(todo, index) in allTodos" :key="todo.id">
+    <draggable 
+      :task="allTodos"
+      group="myTodos"
+      @start="drag=true"
+      @end="drag=false"
+      :options="options"
+      v-for="(todo, index) in allTodos"
+      :key="todo.id">
+      <b-card class="item mr-1 mt-1">
         <b-card-text>
+          <input type="checkbox" v-model="todo.isDone">
+            <span :class="{done: todo.isDone}">
             {{ index +1 }} {{ todo.text }}
+            </span>
+            <span @click="deleteTodo(idx, index)"><b-icon icon="x"></b-icon></span>
         </b-card-text>
       </b-card> 
     </draggable>
@@ -25,19 +36,13 @@ export default {
     }
   },
   computed: {
+    dayTodos() {
+      return this.$store.getters.dayTodos;
+    },
     allTodos() {
       return this.$store.state.allTodos;
     }
   },
-  methods: {
-    onEnd(index) {
-      console.log(this.allTodos[index]);
-      // let todo = this.allTodos[index];
-      // this.week[0].dayTodos.push(todo);
-      // console.log(this.allTodos[0]);
-
-    }
-  }
 };
 </script>
 

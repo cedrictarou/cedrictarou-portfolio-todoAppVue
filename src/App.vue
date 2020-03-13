@@ -14,12 +14,12 @@
   import WeekTable from './components/WeekTable.vue';
 
   export default {
-      components: {
-        appTodoGrid: TodoGrid,
-        appNewTodo: NewTodo,
-        appHeader: Header,
-        appWeekTable: WeekTable,
-      }
+    components: {
+      appTodoGrid: TodoGrid,
+      appNewTodo: NewTodo,
+      appHeader: Header,
+      appWeekTable: WeekTable,
+    },
   }
 </script>
 <style>

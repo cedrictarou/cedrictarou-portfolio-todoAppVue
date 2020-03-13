@@ -4,8 +4,8 @@
       <h3>See your progress</h3>
       <p>タスクを完了してチェックボックスを押すとプログレスバーが増えます。</p>
     </div>
-    <b-progress height="2rem" :max="allTodos.length" show-progress animated>
-    <b-progress-bar :value="remaining" :label="`${((remaining / allTodos.length) * 100).toFixed(0)}%`"></b-progress-bar>
+    <b-progress height="2rem" :max="dayTodos.length" show-progress animated>
+    <b-progress-bar :value="doneTodos.length" :label="`${((doneTodos.length / dayTodos.length) * 100).toFixed(0)}%`"></b-progress-bar>
    </b-progress>
   </div>
 </template>
@@ -17,12 +17,12 @@
       }
     },
     computed: {
-      allTodos() {
-        return this.$store.state.allTodos
+      doneTodos() {
+        return this.$store.getters.doneTodos;
       },
-      remaining() {
-        return this.$store.getters.remaining;
-      } 
+      dayTodos() {
+        return this.$store.getters.dayTodos;
+      }
     },
   }
 </script>

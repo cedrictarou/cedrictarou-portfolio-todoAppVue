@@ -9,10 +9,10 @@ export default new Vuex.Store({
       { text: 'Just a thing to see.', isDone: false},
     ],
     week: [
-      {dayNum: 0, dayTodos: [{text: 'task',isDone: false}, {text: 'task',isDone: false}]},
-      {dayNum: 1, dayTodos: [{text: 'task',isDone: false}]},
-      {dayNum: 2, dayTodos: [{text: 'task',isDone: false}]},
-      {dayNum: 3, dayTodos: [{text: 'task',isDone: false}]},
+      {dayNum: 0, dayTodos: []},
+      { dayNum: 1, dayTodos: [{text: 'aaaaa', isDone: false}]},
+      {dayNum: 2, dayTodos: []},
+      {dayNum: 3, dayTodos: []},
     ],
   },
   getters: {
@@ -21,6 +21,11 @@ export default new Vuex.Store({
       return todo.isDone;
     }),
     dayTodos: state => state.week[0].dayTodos
+  },
+  mutations: {
+    setDayTodos(state, dayTodos) {
+      this.dayTodos = dayTodos;
+    }
   }
   
 })

@@ -1,20 +1,17 @@
 <template>
   <b-card-group deck>
     <draggable 
-      :task="allTodos"
+      v-model="allTodos"
       group="myTodos"
       @start="drag=true"
-      @end="drag=false"
+      @end="dgra=false"
+      @remove="removeItem(index)"
       :options="options"
       v-for="(todo, index) in allTodos"
       :key="todo.id">
       <b-card class="item mr-1 mt-1">
         <b-card-text>
-          <input type="checkbox" v-model="todo.isDone">
-            <span :class="{done: todo.isDone}">
-            {{ index +1 }} {{ todo.text }}
-            </span>
-            <span @click="deleteTodo(idx, index)"><b-icon icon="x"></b-icon></span>
+          {{ index +1 }} {{ todo.text }}
         </b-card-text>
       </b-card> 
     </draggable>
@@ -39,10 +36,26 @@ export default {
     dayTodos() {
       return this.$store.getters.dayTodos;
     },
-    allTodos() {
-      return this.$store.state.allTodos;
+    allTodos: {
+      get() {
+        return this.$store.state.allTodos;
+      },
+      set(value) {
+        this.$store.commit('setDayTodos', value);
+      }
     }
   },
+  methods: {
+    onEnd() {
+      console.log('allTodos', this.allTodos);
+      console.log('dayTodos', this.dayTodos);
+    },
+    removeItem(index) {
+      let todoItem = this.allTodos[index];
+      this.dayTodos.push(todoItem);
+      this.allTodos.splice(index, 1);
+    }
+  }
 };
 </script>
 

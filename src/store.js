@@ -5,27 +5,34 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    allTodos: [
-      { text: 'Just a thing to see.', isDone: false},
+    reservedTasks: [
+      { text: 'Just a thing to see.', isDone: false }
     ],
-    week: [
-      {dayNum: 0, dayTodos: []},
-      { dayNum: 1, dayTodos: [{text: 'aaaaa', isDone: false}]},
-      {dayNum: 2, dayTodos: []},
-      {dayNum: 3, dayTodos: []},
-    ],
+    mon: [{ text: 'buy some mellons.', isDone: false }],
+    tue: [],
+    wed: [],
+    thu: [],
+    fri: [],
+    sat: [],
+    sun: [],
   },
   getters: {
-    //allTodosの内チェックされたものだけの配列
-    doneTodos: state => state.week[0].dayTodos.filter(function (todo) {
-      return todo.isDone;
-    }),
-    dayTodos: state => state.week[0].dayTodos
-  },
+    reservedTasks: state => state.reservedTasks,
+    allTasks: state => [...state.mon, ...state.tue, ...state.wed, ...state.thu, ...state.fri, ...state.sat, ...state.sun],
+    doneTasks: (state, getters) => {
+      return getters.allTasks.filter(task => task.isDone);
+    },
+    mon: state => state.mon,
+    tue: state => state.tue,
+    wed: state => state.wed,
+    thu: state => state.thu,
+    fri: state => state.fri,
+    sat: state => state.sat,
+    sun: state => state.sun,
+  }, 
   mutations: {
-    setDayTodos(state, dayTodos) {
-      this.dayTodos = dayTodos;
+    delteTask(state, index) {
+      state.mon.splice(index, 1);
     }
   }
-  
 })

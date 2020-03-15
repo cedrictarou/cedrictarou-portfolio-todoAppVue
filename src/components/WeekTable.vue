@@ -7,23 +7,59 @@
       <thead>
         <tr>
           <th scope="col">Day</th>
-          <th scope="col">Tasks of day</th>
+          <th scope="col">Tasks of each day</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(day, idx) in week" :key="day.id">
-          <th scope="row">{{ day.dayNum }}</th>
+        <tr>
+          <th scope="row">Monday</th>
           <td>
             <b-card-group deck>
-              <draggable :task="week" group="myTodos" @start="drag=true" @end="onEnd" :options="options">
-                <b-card class="item" v-for="(dayTodo, index) in day.dayTodos" :key="dayTodo.id">
+              <draggable :list="mon" group="weekTasks" @start="drag=true" @end="drag=false">
+                <b-card class="item" v-for="(monTask, index) in mon" :key="monTask.id">
                     <b-card-text>
-                      <input type="checkbox" v-model="dayTodo.isDone">
-                      <span :class="{done: dayTodo.isDone}">
-                      {{ index +1 }} {{ dayTodo.text }}
+                      <input type="checkbox" v-model="monTask.isDone">
+                      <span :class="{done: monTask.isDone}">
+                      {{ index +1 }} {{ monTask.text }}
                       </span>
-                      <span @click="deleteTodo(idx, index)"><b-icon icon="x"></b-icon></span>
+                      <span @click="deleteTask(index)"><b-icon icon="x"></b-icon></span>
                     </b-card-text>
+                </b-card>
+              </draggable>
+            </b-card-group>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Tuesday</th>
+          <td>
+            <b-card-group deck>
+              <draggable :list="tue" group="weekTasks" @start="drag=true" @end="drag=false">
+                <b-card class="item" v-for="(tueTask, index) in tue" :key="tueTask.id">
+                  <b-card-text>
+                    <input type="checkbox" v-model="tueTask.isDone">
+                    <span :class="{done: tueTask.isDone}">
+                    {{ index +1 }} {{ tueTask.text }}
+                    </span>
+                    <span @click="deleteTask(index)"><b-icon icon="x"></b-icon></span>
+                  </b-card-text>
+                </b-card>
+              </draggable>
+            </b-card-group>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Wednesday</th>
+          <td>
+            <b-card-group deck>
+              <draggable :list="wed" group="weekTasks" @start="drag=true" @end="drag=false">
+                <b-card class="item" v-for="(wedTask, index) in wed" :key="wedTask.id">
+                  <b-card-text>
+                    <input type="checkbox" v-model="wedTask.isDone">
+                    <span :class="{done: wedTask.isDone}">
+                    {{ index +1 }} {{ wedTask.text }}
+                    </span>
+                    <span @click="deleteTask(index)"><b-icon icon="x"></b-icon></span>
+                  </b-card-text>
                 </b-card>
               </draggable>
             </b-card-group>
@@ -35,39 +71,19 @@
 </div>
 </template>
 <script>
-// import WeekDayTodo from "./WeekDayTodo.vue";
+import { mapGetters } from 'vuex';
 import draggable from "vuedraggable";
 export default {
   components: {
-    // appWeekDayTodo: WeekDayTodo,
     draggable,
   },
-  data() {
-    return {
-      options: {
-        group: "myTodos",
-        animation: 200
-      },
-    };
-  },
   computed: {
-    allTodos() {
-      return this.$store.state.allTodos;
-    },
-    week() {
-      return this.$store.state.week;
-    }
+    ...mapGetters(['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']),
   },
   methods: {
-    deleteTodo(idx, index) {
-      if(confirm('Are you sure?')) {
-        this.week[idx].dayTodos.splice(index, 1);
-      }
+    deleteTask(index) {
+      this.$store.commit('delteTask', index);
     },
-    onEnd() {
-      console.log('allTodos',this.allTodos[0]);
-      console.log('week',this.week[0]);
-    }
   }
 };
 </script>

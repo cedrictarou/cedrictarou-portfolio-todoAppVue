@@ -15,7 +15,7 @@
           <th scope="row">{{ day.dayNum }}</th>
           <td>
             <b-card-group deck>
-              <draggable :task="week" group="myTodos" @start="drag=true" @end="onEnd" :options="options">
+              <draggable :task="week" group="myTodos" @start="drag=true" @end="drag=false" :options="options">
                 <b-card class="item" v-for="(dayTodo, index) in day.dayTodos" :key="dayTodo.id">
                     <b-card-text>
                       <input type="checkbox" v-model="dayTodo.isDone">
@@ -51,11 +51,29 @@ export default {
     };
   },
   computed: {
-    allTodos() {
-      return this.$store.state.allTodos;
+    dayTodos: {
+      get() {
+        return this.$store.getters.dayTodos;
+      },
+      // set(value) {
+      //   return this.$store.commit('updateDayTodos', value);
+      // }
     },
-    week() {
-      return this.$store.state.week;
+    allTodos: {
+      get() {
+        return this.$store.getters.allTodos;
+      },
+      // set(value) {
+      //   this.$store.commit('updateAllTodos', value);
+      // }
+    },
+    week: {
+      get() {
+        return this.$store.getters.week;
+      },
+      // set(value) {
+      //   this.$store.commit('updateWeek', value);
+      // }
     }
   },
   methods: {
@@ -64,7 +82,8 @@ export default {
         this.week[idx].dayTodos.splice(index, 1);
       }
     },
-    onEnd() {
+    moved() {
+      alert('moved');
       console.log('allTodos',this.allTodos[0]);
       console.log('week',this.week[0]);
     }

@@ -1,11 +1,10 @@
 <template>
   <b-card-group deck>
     <draggable 
-      v-model="allTodos"
+      :task="allTodos"
       group="myTodos"
       @start="drag=true"
-      @end="dgra=false"
-      @remove="removeItem(index)"
+      @end="removeItem(index)"
       :options="options"
       v-for="(todo, index) in allTodos"
       :key="todo.id">
@@ -20,6 +19,7 @@
 
 <script>
 import draggable from "vuedraggable";
+// import {mapGetters } from "vuex";
 export default {
   components: {
     draggable
@@ -33,22 +33,44 @@ export default {
     }
   },
   computed: {
-    dayTodos() {
-      return this.$store.getters.dayTodos;
+    // ...mapGetters(["allTodos","dayTodos"]),
+    dayTodos: {
+      get() {
+        return this.$store.getters.dayTodos;
+      },
+      set(value) {
+        return this.$store.commit('updateDayTodos', value);
+      }
     },
     allTodos: {
       get() {
-        return this.$store.state.allTodos;
+        return this.$store.getters.allTodos;
       },
       set(value) {
-        this.$store.commit('setDayTodos', value);
+        this.$store.commit('updateAllTodos', value);
       }
+    },
+    week: {
+      get() {
+        return this.$store.getters.week;
+      },
+      // set(value) {
+      //   this.$store.commit('updateWeek', value);
+      // }
     }
+    // message: {
+    //   get() {
+    //     return this.$store.getters.message
+    //     },
+    //   set(value) {
+    //     this.$store.dispatch("updatedMessage", value)
+    //   }
+    // }
   },
   methods: {
     onEnd() {
-      console.log('allTodos', this.allTodos);
-      console.log('dayTodos', this.dayTodos);
+      // console.log('allTodos', this.allTodos);
+      // console.log('dayTodos', this.dayTodos);
     },
     removeItem(index) {
       let todoItem = this.allTodos[index];

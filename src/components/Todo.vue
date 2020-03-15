@@ -1,16 +1,16 @@
 <template>
   <b-card-group deck>
     <draggable 
-      :task="allTodos"
-      group="myTodos"
+      :list="reservedTasks"
       @start="drag=true"
-      @end="removeItem(index)"
+      @end="drag=false"
       :options="options"
-      v-for="(todo, index) in allTodos"
-      :key="todo.id">
+      @change="log"
+      v-for="(reservedTask, index) in reservedTasks"
+      :key="reservedTask.id">
       <b-card class="item mr-1 mt-1">
         <b-card-text>
-          {{ index +1 }} {{ todo.text }}
+          {{ index +1 }} {{ reservedTask.text }}
         </b-card-text>
       </b-card> 
     </draggable>
@@ -19,7 +19,6 @@
 
 <script>
 import draggable from "vuedraggable";
-// import {mapGetters } from "vuex";
 export default {
   components: {
     draggable
@@ -27,57 +26,28 @@ export default {
   data() {
     return {
       options: {
-        group: "myTodos",
+        group: "weekTasks",
         animation: 200
       }
     }
   },
   computed: {
-    // ...mapGetters(["allTodos","dayTodos"]),
-    dayTodos: {
-      get() {
-        return this.$store.getters.dayTodos;
-      },
-      set(value) {
-        return this.$store.commit('updateDayTodos', value);
-      }
+    reservedTasks() {
+      return this.$store.getters.reservedTasks;
     },
-    allTodos: {
-      get() {
-        return this.$store.getters.allTodos;
-      },
-      set(value) {
-        this.$store.commit('updateAllTodos', value);
-      }
+    allTasks() {
+      return this.$store.getters.allTasks;
     },
-    week: {
-      get() {
-        return this.$store.getters.week;
-      },
-      // set(value) {
-      //   this.$store.commit('updateWeek', value);
-      // }
+    doneTasks() {
+      return this.$store.getters.doneTasks;
     }
-    // message: {
-    //   get() {
-    //     return this.$store.getters.message
-    //     },
-    //   set(value) {
-    //     this.$store.dispatch("updatedMessage", value)
-    //   }
-    // }
   },
   methods: {
-    onEnd() {
-      // console.log('allTodos', this.allTodos);
-      // console.log('dayTodos', this.dayTodos);
-    },
-    removeItem(index) {
-      let todoItem = this.allTodos[index];
-      this.dayTodos.push(todoItem);
-      this.allTodos.splice(index, 1);
+    log() {
+      console.log('allTasks', this.allTasks);
+      console.log('doneTasks', this.doneTasks);
     }
-  }
+  },
 };
 </script>
 

@@ -10,56 +10,20 @@
           <th scope="col">Tasks of each day</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <th scope="row">Monday</th>
+      <tbody >
+        <tr scope="row" v-for="(dayTasks, index) in allTasks" :key="dayTasks.id">
+          <th >{{ index }}</th>
           <td>
             <b-card-group deck>
-              <draggable :list="mon" group="weekTasks" @start="drag=true" @end="drag=false">
-                <b-card class="item" v-for="(monTask, index) in mon" :key="monTask.id">
+              <draggable :list="allTasks" group="weekTasks" @start="drag=true" @end="drag=false">
+                <b-card class="item" v-for="(dayTask, idx) in dayTasks" :key="dayTask.id">
                     <b-card-text>
-                      <input type="checkbox" v-model="monTask.isDone">
-                      <span :class="{done: monTask.isDone}">
-                      {{ index +1 }} {{ monTask.text }}
+                      <input type="checkbox" v-model="dayTask.isDone">
+                      <span :class="{done: dayTask.isDone}">
+                        {{ idx +1 }} {{ dayTask.text }}
                       </span>
-                      <span @click="deleteTask(index)"><b-icon icon="x"></b-icon></span>
+                      <span @click="deleteTask(index, idx)"><b-icon icon="x"></b-icon></span>
                     </b-card-text>
-                </b-card>
-              </draggable>
-            </b-card-group>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">Tuesday</th>
-          <td>
-            <b-card-group deck>
-              <draggable :list="tue" group="weekTasks" @start="drag=true" @end="drag=false">
-                <b-card class="item" v-for="(tueTask, index) in tue" :key="tueTask.id">
-                  <b-card-text>
-                    <input type="checkbox" v-model="tueTask.isDone">
-                    <span :class="{done: tueTask.isDone}">
-                    {{ index +1 }} {{ tueTask.text }}
-                    </span>
-                    <span @click="deleteTask(index)"><b-icon icon="x"></b-icon></span>
-                  </b-card-text>
-                </b-card>
-              </draggable>
-            </b-card-group>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">Wednesday</th>
-          <td>
-            <b-card-group deck>
-              <draggable :list="wed" group="weekTasks" @start="drag=true" @end="drag=false">
-                <b-card class="item" v-for="(wedTask, index) in wed" :key="wedTask.id">
-                  <b-card-text>
-                    <input type="checkbox" v-model="wedTask.isDone">
-                    <span :class="{done: wedTask.isDone}">
-                    {{ index +1 }} {{ wedTask.text }}
-                    </span>
-                    <span @click="deleteTask(index)"><b-icon icon="x"></b-icon></span>
-                  </b-card-text>
                 </b-card>
               </draggable>
             </b-card-group>
@@ -71,20 +35,30 @@
 </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+// import { mapGetters } from 'vuex';
 import draggable from "vuedraggable";
+// import DayTasks from "./DayTasks.vue";
 export default {
   components: {
     draggable,
+    // DayTasks,
   },
   computed: {
-    ...mapGetters(['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']),
+    allTasks: {
+      get() {
+        return this.$store.getters.allTasks;
+      },
+      // set(value) {
+      //   return this.$store.commit('updateAllTasks', value);
+      // }
+    }
   },
   methods: {
-    deleteTask(index) {
-      this.$store.commit('delteTask', index);
+    deleteTask(index, idx) {
+      const deletedItems = this.allTasks[index];
+      this.$store.commit('deleteTask', {index: deletedItems, idx: idx});
     },
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>

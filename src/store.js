@@ -8,31 +8,41 @@ export default new Vuex.Store({
     reservedTasks: [
       { text: 'Just a thing to see.', isDone: false }
     ],
-    mon: [{ text: 'buy some mellons.', isDone: false }],
-    tue: [],
-    wed: [],
-    thu: [],
-    fri: [],
-    sat: [],
-    sun: [],
+    week: [
+      {
+        id: 0, dayTodos: [{ text: 'buy some mellons.', isDone: true }, { text: 'buy some mellons2.', isDone: true }]
+      },
+      {
+        id: 1, dayTodos: [{ text: 'buy some bananas.', isDone: true }]
+      },
+      {
+        id: 2, dayTodos: [{ text: 'buy some apples.', isDone: false }]
+      },
+      {
+        id: 3, dayTodos: [{ text: 'buy some grapes.', isDone: false }, { text: 'buy some grapes2.', isDone: false }]
+      },
+      {
+        id: 4, dayTodos: [{ text: 'buy some strawberry.', isDone: false }]
+      },
+      {
+        id: 5, dayTodos: [{ text: 'buy some pines.', isDone: false }]
+      },
+      {
+        id: 6, dayTodos: [{ text: 'buy some pears.', isDone: false }]
+      },
+    ],
   },
   getters: {
     reservedTasks: state => state.reservedTasks,
-    allTasks: state => [...state.mon, ...state.tue, ...state.wed, ...state.thu, ...state.fri, ...state.sat, ...state.sun],
+    week: state => state.week,
+    allTasks: (state, getters) => getters.week.map(day => day.dayTodos),
     doneTasks: (state, getters) => {
       return getters.allTasks.filter(task => task.isDone);
     },
-    mon: state => state.mon,
-    tue: state => state.tue,
-    wed: state => state.wed,
-    thu: state => state.thu,
-    fri: state => state.fri,
-    sat: state => state.sat,
-    sun: state => state.sun,
   }, 
   mutations: {
-    delteTask(state, index) {
-      state.mon.splice(index, 1);
+    deleteTask(getters, { deletedItems, idx }) {
+      deletedItems.splice(idx, 1);
     }
   }
 })

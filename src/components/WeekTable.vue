@@ -11,11 +11,11 @@
         </tr>
       </thead>
       <tbody >
-        <tr scope="row" v-for="(dayTasks, index) in allTasks" :key="dayTasks.id">
+        <tr scope="row" v-for="(dayTasks, index) in weekTasks" :key="dayTasks.id">
           <th >{{ index }}</th>
           <td>
             <b-card-group deck>
-              <draggable :list="allTasks" group="weekTasks" @start="drag=true" @end="drag=false">
+              <draggable :list="weekTasks" group="weekTasks" @start="drag=true" @end="drag=false">
                 <b-card class="item" v-for="(dayTask, idx) in dayTasks" :key="dayTask.id">
                     <b-card-text>
                       <input type="checkbox" v-model="dayTask.isDone">
@@ -31,32 +31,42 @@
         </tr>
       </tbody>
     </table>
+    <div>
+      <p>サンプル</p>
+      <draggable :list="myArray" group="weekTasks" @start="drag=true" @end="drag=false">
+        <div v-for="element in myArray" :key="element.id">{{element}}</div>
+      </draggable>
+    </div>
   </div>
 </div>
 </template>
 <script>
-// import { mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 import draggable from "vuedraggable";
-// import DayTasks from "./DayTasks.vue";
 export default {
   components: {
     draggable,
-    // DayTasks,
+  },
+  data() {
+    return {
+      myArray: ['aaaa', 'bbbb', 'cccc'],
+    }
   },
   computed: {
-    allTasks: {
+    ...mapGetters(['weekTasks', 'doneTasksArray']),
+    allTasksArray: {
       get() {
-        return this.$store.getters.allTasks;
+        return this.$store.getters.allTasksArray;
       },
-      // set(value) {
-      //   return this.$store.commit('updateAllTasks', value);
-      // }
+      set(value) {
+        return this.$store.commit('updateAllTasksArray', value);
+      }
     }
   },
   methods: {
     deleteTask(index, idx) {
-      const deletedItems = this.allTasks[index];
-      this.$store.commit('deleteTask', {index: deletedItems, idx: idx});
+      const deletedItems = this.weekTasks[index];
+      this.$store.commit('deleteTask', [deletedItems, idx]);
     },
   },
 };

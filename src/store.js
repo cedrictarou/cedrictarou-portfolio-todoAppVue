@@ -10,39 +10,49 @@ export default new Vuex.Store({
     ],
     week: [
       {
-        id: 0, dayTodos: [{ text: 'buy some mellons.', isDone: true }, { text: 'buy some mellons2.', isDone: true }]
+        id: 'Monday', dayTodos: [{ text: 'buy some mellons.', isDone: true }, { text: 'buy some mellons2.', isDone: true }]
       },
       {
-        id: 1, dayTodos: [{ text: 'buy some bananas.', isDone: true }]
+        id: 'Tuesday', dayTodos: [{ text: 'buy some bananas.', isDone: true }]
       },
       {
-        id: 2, dayTodos: [{ text: 'buy some apples.', isDone: false }]
+        id: 'Wedenesday', dayTodos: [{ text: 'buy some apples.', isDone: false }]
       },
       {
-        id: 3, dayTodos: [{ text: 'buy some grapes.', isDone: false }, { text: 'buy some grapes2.', isDone: false }]
+        id: 'Thursday', dayTodos: [{ text: 'buy some grapes.', isDone: false }, { text: 'buy some grapes2.', isDone: false }]
       },
       {
-        id: 4, dayTodos: [{ text: 'buy some strawberry.', isDone: false }]
+        id: 'Friday', dayTodos: [{ text: 'buy some strawberry.', isDone: false }]
       },
       {
-        id: 5, dayTodos: [{ text: 'buy some pines.', isDone: false }]
+        id: 'Saturday', dayTodos: [{ text: 'buy some pines.', isDone: false }]
       },
       {
-        id: 6, dayTodos: [{ text: 'buy some pears.', isDone: false }]
+        id: 'Sunday', dayTodos: [{ text: 'buy some pears.', isDone: false }]
       },
     ],
+    myArray: ['aaaa', 'bbbb', 'cccc'],
   },
   getters: {
+    myArray: state => state.myArray,
     reservedTasks: state => state.reservedTasks,
     week: state => state.week,
-    allTasks: (state, getters) => getters.week.map(day => day.dayTodos),
-    doneTasks: (state, getters) => {
-      return getters.allTasks.filter(task => task.isDone);
+    weekTasks: (state, getters) => getters.week.map(day => day.dayTodos),
+    allTasksArray: (state, getters) => {
+      //1次元の配列に変換する処理
+      const list = getters.weekTasks.reduce((pre, current) => { pre.push(...current); return pre }, []);
+      return list;
     },
+    doneTasksArray: (state, getters) => {
+      return getters.allTasksArray.filter( item => item.isDone);
+    }
   }, 
   mutations: {
-    deleteTask(getters, { deletedItems, idx }) {
+    deleteTask (state, [deletedItems, idx]) {
       deletedItems.splice(idx, 1);
+    },
+    updateReservedTask(getters, value) {
+      getters.reservedTasks = value;
     }
   }
 })

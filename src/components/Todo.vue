@@ -4,17 +4,18 @@
       :list="reservedTasks"
       @start="drag=true"
       @end="drag=false"
-      :options="options"
-      @change="log"
-      v-for="(reservedTask, index) in reservedTasks"
+      group="weekTasks"
+      >
+      <b-card class="item mr-1 mt-1" v-for="(reservedTask, index) in reservedTasks"
       :key="reservedTask.id">
-      <b-card class="item mr-1 mt-1">
         <b-card-text>
+          {{ day }}
           {{ index +1 }} {{ reservedTask.text }}
         </b-card-text>
       </b-card> 
     </draggable>
   </b-card-group>
+  
 </template>
 
 <script>
@@ -23,8 +24,10 @@ export default {
   components: {
     draggable
   },
+  props: ['day'],
   data() {
     return {
+      count: 0,
       options: {
         group: "weekTasks",
         animation: 200
@@ -32,20 +35,19 @@ export default {
     }
   },
   computed: {
-    reservedTasks() {
-      return this.$store.getters.reservedTasks;
+    reservedTasks: {
+      get() {
+        return this.$store.getters.reservedTasks;
+        },
+      set(value) {
+        return this.$store.commit('updateReservedTask', value);
+      }
     },
     allTasks() {
       return this.$store.getters.allTasks;
     },
     doneTasks() {
       return this.$store.getters.doneTasks;
-    }
-  },
-  methods: {
-    log() {
-      console.log('allTasks', this.allTasks);
-      console.log('doneTasks', this.doneTasks);
     }
   },
 };

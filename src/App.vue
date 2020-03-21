@@ -11,14 +11,16 @@
   import TodoGrid from './components/TodoGrid.vue';
   import NewTodo from './components/NewTodo.vue';
   import Header from './components/Header.vue';
-  import WeekTable from './components/WeekTable.vue';
+  // import WeekTable from './components/WeekTable.vue';
+  import Week2 from './components/Week2.vue';
 
   export default {
     components: {
       appTodoGrid: TodoGrid,
       appNewTodo: NewTodo,
       appHeader: Header,
-      appWeekTable: WeekTable,
+      // appWeekTable: WeekTable,
+      appWeekTable: Week2,
     },
   }
 </script>

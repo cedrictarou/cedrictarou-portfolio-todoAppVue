@@ -45,7 +45,9 @@ export default new Vuex.Store({
     },
     doneTasksArray: (state, getters) => {
       return getters.allTasksArray.filter( item => item.isDone);
-    }
+    },
+    // mondayArray: state => state.week.(item => item.id ==='Monday'),
+    // mondayTasksArray: (state, getters) => getters.mondayArray.map( item => item.dayTodos),
   }, 
   mutations: {
     deleteTask (state, [deletedItems, idx]) {

@@ -1,52 +1,44 @@
 <template>
+<div>
   <b-card-group deck>
     <draggable 
-      :list="reservedTasks"
+      :list="mondayTasksArray"
       @start="drag=true"
       @end="drag=false"
       group="weekTasks"
       >
-      <b-card class="item mr-1 mt-1" v-for="(reservedTask, index) in reservedTasks"
-      :key="reservedTask.id">
+      <b-card class="item mr-1 mt-1" v-for="(element, index) in mondayTasksArray"
+      :key="element.id">
         <b-card-text>
-          {{ day }}
-          {{ index +1 }} {{ reservedTask.text }}
+          <input type="checkbox">
+            <span>
+              {{index +1}} {{element.text}}
+            </span>
+            <span><b-icon icon="x"></b-icon></span>
         </b-card-text>
       </b-card> 
     </draggable>
   </b-card-group>
-  
+</div>
 </template>
-
 <script>
 import draggable from "vuedraggable";
 export default {
   components: {
     draggable,
   },
-  props: ['day'],
   data() {
     return {
       options: {
         group: "weekTasks",
         animation: 200
-      }
-    }
-  },
-  computed: {
-    reservedTasks: {
-      get() {
-        return this.$store.getters.reservedTasks;
-        },
-      set(value) {
-        return this.$store.commit('updateReservedTask', value);
-      }
-    },
-    allTasks() {
-      return this.$store.getters.allTasks;
-    },
-    doneTasks() {
-      return this.$store.getters.doneTasks;
+      },
+      mondayTasksArray: [
+        {text: 'aaaaaa', isDone: false},
+        {text: 'bbbbbb', isDone: true},
+        {text: 'cccccc', isDone: false},
+        {text: 'dddddd', isDone: true},
+      ],
     }
   },
 };

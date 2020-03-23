@@ -15,6 +15,7 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex';
   export default {
     data() {
       return {
@@ -22,11 +23,9 @@
         inputTask: '',
       }
     },
-    computed: {
-      reservedTasks() {
-        return this.$store.getters.reservedTasks;
-      }
-    },
+  computed: {
+    ...mapGetters(['allTasksArray']),
+  } , 
     methods: {
       newTodo() {
         // 入力を終えて、エンターを押したら発火するように調整
@@ -34,10 +33,11 @@
           return ;
         } 
         const todo = {
+          day: 'none',
           text: this.inputTask,
           isDone: false,
         };
-        this.reservedTasks.push(todo);
+        this.allTasksArray.push(todo);
         this.inputTask = '';
       },
     }

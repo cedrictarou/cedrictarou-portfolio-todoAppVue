@@ -2,19 +2,19 @@
 <div>
   <b-card-group deck>
     <draggable 
-      :list="mondayTasksArray"
+      v-model="myList"
       @start="drag=true"
       @end="drag=false"
       group="weekTasks"
       >
-      <b-card class="item mr-1 mt-1" v-for="(element, index) in mondayTasksArray"
+        <b-card class="item mr-1 mt-1" v-for="(element, index) in myList"
       :key="element.id">
         <b-card-text>
-          <input type="checkbox">
-            <span>
+          <input type="checkbox" v-model="element.isDone">
+            <span :class="{done: element.isDone}">
               {{index +1}} {{element.text}}
             </span>
-            <span><b-icon icon="x"></b-icon></span>
+            <span @click="doDelete(index)"><b-icon icon="x"></b-icon></span>
         </b-card-text>
       </b-card> 
     </draggable>
@@ -23,9 +23,11 @@
 </template>
 <script>
 import draggable from "vuedraggable";
+// import Item from "./Item.vue";
 export default {
   components: {
     draggable,
+    // Item,
   },
   data() {
     return {
@@ -35,12 +37,27 @@ export default {
       },
       mondayTasksArray: [
         {text: 'aaaaaa', isDone: false},
-        {text: 'bbbbbb', isDone: true},
+        {text: 'bbbbbb', isDone: false},
         {text: 'cccccc', isDone: false},
-        {text: 'dddddd', isDone: true},
+        {text: 'dddddd', isDone: false},
       ],
     }
   },
+  computed: {
+    myList: {
+      get() {
+        return this.mondayTasksArray;
+      },
+      set(value) {
+        this.mondayTasksArray = value;
+      }
+    }
+  },
+  methods: {
+    doDelete(index) {
+      this.mondayTasksArray.splice(index, 1);
+    },
+  }
 };
 </script>
 
@@ -59,6 +76,6 @@ export default {
 }
 .done {
   text-decoration: line-through;
-  color: #bbb;
+  opacity: 0.2;
 }
 </style>

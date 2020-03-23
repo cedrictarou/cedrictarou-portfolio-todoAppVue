@@ -17,14 +17,15 @@
       }
     },
     computed: {
-      ...mapGetters(['allTasksArray', 'doneTasksArray']),
+      ...mapGetters(['allTasksArray']),
       countItems() {
         //全てのタスクの数
         return this.allTasksArray.length;
       },
       doneItems() {
         //全ての完了したタスクの数
-        return this.doneTasksArray.length;
+        const doneTodosArray = this.allTasksArray.filter( item => item.isDone);
+        return doneTodosArray.length;
       }
     },
   }

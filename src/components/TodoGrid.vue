@@ -9,7 +9,6 @@
       <app-todo></app-todo>
     </b-col>
   </b-row>
-  <b-alert v-show="reservedTasks.length" show class="mt-3">Info: Drag to move your todos</b-alert>
 </div>
 </template>
 
@@ -19,13 +18,5 @@ export default {
   components: {
     appTodo: Todo,
   },
-  computed: {
-    reservedTasks() {
-      return this.$store.getters.reservedTasks;
-    }
-  },
-  methods: {
-    
-  }
 };
 </script>

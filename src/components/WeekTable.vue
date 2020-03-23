@@ -6,68 +6,33 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th scope="col">Day</th>
-          <th scope="col">Tasks of each day</th>
+          <th scope="col">#</th>
+          <th scope="col">Tasks</th>
         </tr>
       </thead>
-      <tbody >
-        <tr scope="row" v-for="(dayTasks, index) in weekTasks" :key="dayTasks.id">
-          <th >{{ index }}</th>
+      <tbody>
+        <tr v-for="day in week" :key="day.id">
+          <th scope="row">{{ day }}</th>
           <td>
-            <b-card-group deck>
-              <draggable :list="weekTasks" group="weekTasks" @start="drag=true" @end="drag=false">
-                <b-card class="item" v-for="(dayTask, idx) in dayTasks" :key="dayTask.id">
-                    <b-card-text>
-                      <input type="checkbox" v-model="dayTask.isDone">
-                      <span :class="{done: dayTask.isDone}">
-                        {{ idx +1 }} {{ dayTask.text }}
-                      </span>
-                      <span @click="deleteTask(index, idx)"><b-icon icon="x"></b-icon></span>
-                    </b-card-text>
-                </b-card>
-              </draggable>
-            </b-card-group>
+            <app-table-component></app-table-component>
           </td>
         </tr>
       </tbody>
     </table>
-    <div>
-      <p>サンプル</p>
-      <draggable :list="myArray" group="weekTasks" @start="drag=true" @end="drag=false">
-        <div v-for="element in myArray" :key="element.id">{{element}}</div>
-      </draggable>
-    </div>
   </div>
 </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
-import draggable from "vuedraggable";
+import TableComponent from "./TableComponent.vue";
 export default {
   components: {
-    draggable,
+    appTableComponent: TableComponent,
   },
   data() {
     return {
-      myArray: ['aaaa', 'bbbb', 'cccc'],
+      // week: ['Monday', 'Tuesday', 'Wednseday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      week: ['Monday', 'Tuesday',],
     }
-  },
-  computed: {
-    ...mapGetters(['weekTasks', 'doneTasksArray']),
-    allTasksArray: {
-      get() {
-        return this.$store.getters.allTasksArray;
-      },
-      set(value) {
-        return this.$store.commit('updateAllTasksArray', value);
-      }
-    }
-  },
-  methods: {
-    deleteTask(index, idx) {
-      const deletedItems = this.weekTasks[index];
-      this.$store.commit('deleteTask', [deletedItems, idx]);
-    },
   },
 };
 </script>

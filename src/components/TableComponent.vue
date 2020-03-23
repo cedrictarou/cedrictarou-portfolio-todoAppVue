@@ -2,19 +2,19 @@
 <div>
   <b-card-group deck>
     <draggable 
-      v-model="myList"
+      v-model="allTasksArray"
       @start="drag=true"
       @end="drag=false"
       group="weekTasks"
       >
-        <b-card class="item mr-1 mt-1" v-for="(element, index) in myList"
+        <b-card class="item mr-1 mt-1" v-for="(element, index) in allTasksArray"
       :key="element.id">
         <b-card-text>
           <input type="checkbox" v-model="element.isDone">
             <span :class="{done: element.isDone}">
-              {{index +1}} {{element.text}}
+              {{dayIndex}} {{index +1}} {{element.text}}
             </span>
-            <span @click="doDelete(index)"><b-icon icon="x"></b-icon></span>
+            <span @click="doDelete(dayIndex, index)"><b-icon icon="x"></b-icon></span>
         </b-card-text>
       </b-card> 
     </draggable>
@@ -23,39 +23,43 @@
 </template>
 <script>
 import draggable from "vuedraggable";
-// import Item from "./Item.vue";
 export default {
   components: {
     draggable,
-    // Item,
   },
+  props:['dayIndex'],
   data() {
     return {
       options: {
         group: "weekTasks",
         animation: 200
       },
-      mondayTasksArray: [
-        {text: 'aaaaaa', isDone: false},
-        {text: 'bbbbbb', isDone: false},
-        {text: 'cccccc', isDone: false},
-        {text: 'dddddd', isDone: false},
-      ],
     }
   },
   computed: {
-    myList: {
+    allTasksArray: {
       get() {
-        return this.mondayTasksArray;
+        return this.$store.getters.allTasksArray;
       },
       set(value) {
-        this.mondayTasksArray = value;
-      }
-    }
+        this.$store.dispatch('updateAllTasksArray', value);
+        }
+    },
+    // myList: {
+    //   get() {
+    //     return this.allTasksArray;
+    //   },
+    //   set(value) {
+    //     this.allTasksArray = value;
+    //   }
+    // }
   },
   methods: {
-    doDelete(index) {
-      this.mondayTasksArray.splice(index, 1);
+    //動的にできるのは引数なので、配列で持たせて曜日指定するのが良い
+    //これがいまいちよくわかっていない。
+    doDelete(dayIndex, index) {
+      console.log(dayIndex, index);
+      // this.mondayTasksArray.splice(index, 1);
     },
   }
 };

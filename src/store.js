@@ -24,14 +24,16 @@ export default new Vuex.Store({
     allTasksArray: state => state.allTasksArray,
   }, 
   mutations: {
-    deleteTask (state, [deletedItems, idx]) {
-      deletedItems.splice(idx, 1);
-    },
-    updateAllTasksArray(state, value) {
-      state.allTasksArray = value;
+    // deleteTask (state, [deletedItems, idx]) {
+    //   deletedItems.splice(idx, 1);
+    // },
+    updateAllTasksArray(state, newValue) {
+      state.allTasksArray = newValue;
     },
   },
   actions: {
-
+    updateAllTasksArray({ commit }, newValue) {
+      commit("updateAllTasksArray", newValue);
+    }
   }
 })

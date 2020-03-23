@@ -11,10 +11,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="day in week" :key="day.id">
+        <tr v-for="(day, dayIndex ) in week" :key="day.id">
           <th scope="row">{{ day }}</th>
           <td>
-            <app-table-component></app-table-component>
+            <app-table-component :dayIndex="dayIndex"></app-table-component>
           </td>
         </tr>
       </tbody>

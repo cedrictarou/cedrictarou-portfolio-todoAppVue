@@ -11,10 +11,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(day, dayIndex ) in week" :key="day.id">
+        <tr v-for="day in week" :key="day.id">
           <th scope="row">{{ day }}</th>
           <td>
-            <app-table-component :dayIndex="dayIndex"></app-table-component>
+            <app-monday-component></app-monday-component>
           </td>
         </tr>
       </tbody>
@@ -23,15 +23,15 @@
 </div>
 </template>
 <script>
-import TableComponent from "./TableComponent.vue";
+import MondayComponent from "./MondayComponent.vue";
 export default {
   components: {
-    appTableComponent: TableComponent,
+    appMondayComponent: MondayComponent,
   },
   data() {
     return {
       // week: ['Monday', 'Tuesday', 'Wednseday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-      week: ['Monday', 'Tuesday',],
+      week: ['Monday'],
     }
   },
 };

@@ -1,12 +1,12 @@
 <template>
   <b-card-group deck>
     <draggable 
-      :list="noneDayTasksArray"
+      v-model="noneDayArray"
       @start="drag=true"
-      @end="drag=false"
+      @end="onEnd"
       group="weekTasks"
       >
-      <b-card class="item mr-1 mt-1" v-for="(element, index) in noneDayTasksArray"
+      <b-card class="item mr-1 mt-1" v-for="(element, index) in noneDayArray"
       :key="element.id">
         <b-card-text>
           {{ index +1 }} {{ element.text }}
@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import draggable from "vuedraggable";
 export default {
   components: {
@@ -33,12 +32,23 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['allTasksArray']),
-    noneDayTasksArray() {
-      const noneItems = this.allTasksArray.filter( item => item.day === 'none');
-      return noneItems;
+    newAllTasksArray() {
+      return this.$store.getters.newAllTasksArray;
+    },
+    noneDayArray: {
+      get() {
+        return this.$store.getters.noneDayArray;
+      },
+      set(value) {
+        this.$store.commit('updateNoneDayArray', value); 
+      }
     }
   },
+  methods: {
+    onEnd() {
+      console.log(this.newAllTasksArray);
+    }
+  }
 };
 </script>
 

@@ -1,20 +1,21 @@
 <template>
 <div>
+  <button @click="log()">button</button>
   <b-card-group deck>
     <draggable 
-      v-model="allTasksArray"
+      v-model="mondayArray"
       @start="drag=true"
-      @end="drag=false"
+      @end="onEnd"
       group="weekTasks"
       >
-        <b-card class="item mr-1 mt-1" v-for="(element, index) in allTasksArray"
+        <b-card class="item mr-1 mt-1" v-for="(element, index) in mondayArray"
       :key="element.id">
         <b-card-text>
           <input type="checkbox" v-model="element.isDone">
             <span :class="{done: element.isDone}">
-              {{dayIndex}} {{index +1}} {{element.text}}
+              {{index +1}} {{element.text}}
             </span>
-            <span @click="doDelete(dayIndex, index)"><b-icon icon="x"></b-icon></span>
+            <span @click="doDeleteTodo(element.id)"><b-icon icon="x"></b-icon></span>
         </b-card-text>
       </b-card> 
     </draggable>
@@ -27,7 +28,6 @@ export default {
   components: {
     draggable,
   },
-  props:['dayIndex'],
   data() {
     return {
       options: {
@@ -37,30 +37,28 @@ export default {
     }
   },
   computed: {
-    allTasksArray: {
+    newAllTasksArray() {
+      return this.$store.getters.newAllTasksArray;
+    },
+    mondayArray: {
       get() {
-        return this.$store.getters.allTasksArray;
+        return this.$store.getters.mondayArray;
       },
       set(value) {
-        this.$store.dispatch('updateAllTasksArray', value);
-        }
-    },
-    // myList: {
-    //   get() {
-    //     return this.allTasksArray;
-    //   },
-    //   set(value) {
-    //     this.allTasksArray = value;
-    //   }
-    // }
+        this.$store.commit('updateMondayArray', value);
+      }
+    }
   },
   methods: {
-    //動的にできるのは引数なので、配列で持たせて曜日指定するのが良い
-    //これがいまいちよくわかっていない。
-    doDelete(dayIndex, index) {
-      console.log(dayIndex, index);
-      // this.mondayTasksArray.splice(index, 1);
+    doDeleteTodo(taskId) {
+      this.$store.commit('doDeleteTodo', taskId);
     },
+    log() {
+      console.log(this.newAllTasksArray);
+    },
+    onEnd() {
+      console.log(this.mondayArray);
+    }
   }
 };
 </script>

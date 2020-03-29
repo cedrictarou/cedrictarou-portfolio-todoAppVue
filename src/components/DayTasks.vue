@@ -1,50 +1,63 @@
 <template>
+<div>
   <b-card-group deck>
     <draggable 
-      :list="allTasksArray"
+      v-model="mondayArray"
       @start="drag=true"
       @end="drag=false"
       group="weekTasks"
       >
-      <b-card class="item mr-1 mt-1" v-for="(element, index) in allTasksArray"
+        <b-card class="item mr-1 mt-1" v-for="(element, index) in mondayArray"
       :key="element.id">
-        <b-card-text>
-         {{day}} {{index}} {{element.text}}
+        <b-card-text @click="log(index)">
+          <input type="checkbox" v-model="element.isDone">
+            <span :class="{done: element.isDone}">
+              {{index +1}} {{element.text}}
+            </span>
+            <span @click="doDeleteTodo(element.id)"><b-icon icon="x"></b-icon></span>
         </b-card-text>
       </b-card> 
     </draggable>
   </b-card-group>
-  
+</div>
 </template>
-
 <script>
 import draggable from "vuedraggable";
 export default {
   components: {
     draggable,
   },
-  props: ['day'],
   data() {
     return {
       options: {
         group: "weekTasks",
         animation: 200
-      }
+      },
     }
   },
   computed: {
-    allTasksArray() {
-      return this.$store.getters.allTasksArray;
-    },
-    reservedTasks: {
+    mondayArray: {
       get() {
-        return this.$store.getters.reservedTasks;
-        },
-      set(value) {
-        return this.$store.commit('updateReservedTask', value);
-      }
+      return this.$store.getters.mondayArray;
     },
+      set(value) {
+        this.$store.commit('updateMondayArray', value);
+      }
+    }
   },
+
+  methods: {
+    // doDeleteTodo(taskId) {
+    //   this.$store.commit('doDeleteTodo', taskId);
+    // },
+    doDeleteTodo(index) {
+      // this.$store.commit('doDeleteTodo', taskId);
+      this.mondayArray.splice(index, 1);
+    },
+    log(index) {
+      console.log('aaa', index);
+    }
+  }
 };
 </script>
 
@@ -63,6 +76,6 @@ export default {
 }
 .done {
   text-decoration: line-through;
-  color: #bbb;
+  opacity: 0.2;
 }
 </style>

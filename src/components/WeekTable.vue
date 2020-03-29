@@ -6,68 +6,83 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th scope="col">Day</th>
-          <th scope="col">Tasks of each day</th>
+          <th scope="col">#</th>
+          <th scope="col">Tasks</th>
         </tr>
       </thead>
-      <tbody >
-        <tr scope="row" v-for="(dayTasks, index) in weekTasks" :key="dayTasks.id">
-          <th >{{ index }}</th>
+      <tbody>
+        <tr>
+          <th scope="row">Monday</th>
           <td>
-            <b-card-group deck>
-              <draggable :list="weekTasks" group="weekTasks" @start="drag=true" @end="drag=false">
-                <b-card class="item" v-for="(dayTask, idx) in dayTasks" :key="dayTask.id">
-                    <b-card-text>
-                      <input type="checkbox" v-model="dayTask.isDone">
-                      <span :class="{done: dayTask.isDone}">
-                        {{ idx +1 }} {{ dayTask.text }}
-                      </span>
-                      <span @click="deleteTask(index, idx)"><b-icon icon="x"></b-icon></span>
-                    </b-card-text>
-                </b-card>
-              </draggable>
-            </b-card-group>
+            <app-monday-cmp></app-monday-cmp>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Tuesday</th>
+          <td>
+            <app-tuesday-cmp></app-tuesday-cmp>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Wednesday</th>
+          <td>
+            <app-wednesday-cmp></app-wednesday-cmp>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Thursday</th>
+          <td>
+            <app-thursday-cmp></app-thursday-cmp>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Friday</th>
+          <td>
+            <app-friday-cmp></app-friday-cmp>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Saturday</th>
+          <td>
+            <app-saturday-cmp></app-saturday-cmp>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Sunday</th>
+          <td>
+            <app-sunday-cmp></app-sunday-cmp>
           </td>
         </tr>
       </tbody>
     </table>
-    <div>
-      <p>サンプル</p>
-      <draggable :list="myArray" group="weekTasks" @start="drag=true" @end="drag=false">
-        <div v-for="element in myArray" :key="element.id">{{element}}</div>
-      </draggable>
-    </div>
   </div>
 </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
-import draggable from "vuedraggable";
+// import DayTasks from "./DayTasks.vue";
+import MondayCmp from "./daysCmp/MondayCmp.vue";
+import TuesdayCmp from "./daysCmp/TuesdayCmp.vue";
+import WednesdayCmp from "./daysCmp/WednesdayCmp.vue";
+import ThursdayCmp from "./daysCmp/ThursdayCmp.vue";
+import FridayCmp from "./daysCmp/FridayCmp.vue";
+import SaturdayCmp from "./daysCmp/SaturdayCmp.vue";
+import SundayCmp from "./daysCmp/SundayCmp.vue";
 export default {
   components: {
-    draggable,
+    // appDayTasks: DayTasks,
+    appMondayCmp: MondayCmp,
+    appTuesdayCmp: TuesdayCmp,
+    appWednesdayCmp: WednesdayCmp,
+    appThursdayCmp: ThursdayCmp,
+    appFridayCmp: FridayCmp,
+    appSaturdayCmp: SaturdayCmp,
+    appSundayCmp: SundayCmp,
   },
   data() {
     return {
-      myArray: ['aaaa', 'bbbb', 'cccc'],
+      // week: ['Monday', 'Tuesday', 'Wednseday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      week: ['Monday'],
     }
-  },
-  computed: {
-    ...mapGetters(['weekTasks', 'doneTasksArray']),
-    allTasksArray: {
-      get() {
-        return this.$store.getters.allTasksArray;
-      },
-      set(value) {
-        return this.$store.commit('updateAllTasksArray', value);
-      }
-    }
-  },
-  methods: {
-    deleteTask(index, idx) {
-      const deletedItems = this.weekTasks[index];
-      this.$store.commit('deleteTask', [deletedItems, idx]);
-    },
   },
 };
 </script>

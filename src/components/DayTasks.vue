@@ -37,28 +37,29 @@ export default {
     }
   },
   computed: {
-    newAllTasksArray() {
-      return this.$store.getters.newAllTasksArray;
-    },
-    mondayArray: {
+    allTasksArray: {
       get() {
-        return this.$store.getters.mondayArray;
+        return this.$store.getters.allTasksArray;
       },
       set(value) {
-        this.$store.commit('updateMondayArray', value);
+        this.$store.commit('updateAllTasksArray', value);
       }
+    },
+    mondayArray() {
+      return this.allTasksArray.filter( dayTasks => dayTasks.day === 'Monday');
     }
   },
+
   methods: {
     doDeleteTodo(taskId) {
       this.$store.commit('doDeleteTodo', taskId);
     },
     log() {
-      console.log(this.newAllTasksArray);
+      console.log('MondayArray', this.mondayArray);
     },
     onEnd() {
-      console.log(this.mondayArray);
-    }
+      console.log('MondayArray', this.mondayArray);
+    },
   }
 };
 </script>

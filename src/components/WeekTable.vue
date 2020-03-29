@@ -11,10 +11,18 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="day in week" :key="day.id">
-          <th scope="row">{{ day }}</th>
+        <!-- <tr v-for="day in week" :key="day.id"> -->
+        <tr>
+          <th scope="row">Monday</th>
           <td>
-            <app-monday-component></app-monday-component>
+            <app-dayTasks>
+            </app-dayTasks>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Tuesday</th>
+          <td>
+            <app-dayTasks></app-dayTasks>
           </td>
         </tr>
       </tbody>
@@ -23,10 +31,10 @@
 </div>
 </template>
 <script>
-import MondayComponent from "./MondayComponent.vue";
+import DayTasks from "./DayTasks.vue";
 export default {
   components: {
-    appMondayComponent: MondayComponent,
+    appDayTasks: DayTasks,
   },
   data() {
     return {

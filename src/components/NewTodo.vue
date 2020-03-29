@@ -7,7 +7,7 @@
     <b-form-input
       v-model="inputTask"
       placeholder="Enter something to do..., and hit Enter!"
-      @keydown.enter="doAddTodo()"
+      @keydown.enter="doMakeTodo()"
       @compositionstart="composing=true"
       @compositionend="composing=false"
     ></b-form-input>
@@ -27,20 +27,18 @@
     ...mapGetters(['allTasksArray']),
   } , 
     methods: {
-      doAddTodo() {
-        // this.$store.commit('doAddTodo', value);
-        // 入力を終えて、エンターを押したら発火するように調整
+      doMakeTodo() {
         if(this.composing) {
           return ;
         } 
-        //mutationsで処理するように変更必要
         const todo = {
           id: this.allTasksArray.length,
           day: 'none',
           text: this.inputTask,
           isDone: false,
         };
-        this.allTasksArray.push(todo);
+        //mutationsで処理するように変更必要
+        this.$store.commit('doAddTodo', todo);
         this.inputTask = '';
       },
     }

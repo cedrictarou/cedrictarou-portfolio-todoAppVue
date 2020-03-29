@@ -32,21 +32,21 @@ export default {
     }
   },
   computed: {
-    newAllTasksArray() {
-      return this.$store.getters.newAllTasksArray;
-    },
-    noneDayArray: {
+    allTasksArray: {
       get() {
-        return this.$store.getters.noneDayArray;
-      },
+        return this.$store.getters.allTasksArray;
+    },
       set(value) {
-        this.$store.commit('updateNoneDayArray', value); 
+        this.$store.commit('updateAllTasksArray', value);
       }
+    },
+    noneDayArray() {
+      return this.allTasksArray.filter( dayTasks => dayTasks.day === 'none');
     }
   },
   methods: {
     onEnd() {
-      console.log(this.newAllTasksArray);
+      console.log(this.allTasksArray);
     }
   }
 };

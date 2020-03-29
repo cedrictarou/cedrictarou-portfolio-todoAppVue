@@ -9,7 +9,6 @@
   </div>
 </template>
 <script>
-  import { mapGetters } from 'vuex';
   export default {
     data() {
       return {
@@ -17,7 +16,9 @@
       }
     },
     computed: {
-      ...mapGetters(['allTasksArray']),
+      allTasksArray() {
+        return this.$store.getters.allTasksArray;
+      },
       countItems() {
         //全てのタスクの数
         return this.allTasksArray.length;

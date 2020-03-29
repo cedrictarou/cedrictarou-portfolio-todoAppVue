@@ -15,7 +15,6 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex';
   export default {
     data() {
       return {
@@ -24,7 +23,14 @@
       }
     },
   computed: {
-    ...mapGetters(['allTasksArray']),
+    nonedayArray: {
+      get() {
+      return this.$store.getters.nonedayArray;
+    },
+      set(value) {
+        this.$store.commit('updateNonedayArray', value);
+      }
+    }
   } , 
     methods: {
       doMakeTodo() {
@@ -32,14 +38,16 @@
           return ;
         } 
         const todo = {
-          id: this.allTasksArray.length,
+          // id: this.allTasksArray.length,
           day: 'none',
           text: this.inputTask,
           isDone: false,
         };
-        //mutationsで処理するように変更必要
-        this.$store.commit('doAddTodo', todo);
+        this.nonedayArray.push(todo);
         this.inputTask = '';
+        //mutationsで処理するように変更必要
+        // this.$store.commit('doAddTodo', todo);
+        // this.inputTask = '';
       },
     }
   }

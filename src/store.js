@@ -5,32 +5,77 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    allTasksArray: [
-      { id: 0, day: 'none', text: 'nonday-task1', isDone: false},
-      { id: 1, day: 'Monday', text: 'monday-task2', isDone: false},
-      { id: 2, day: 'Monday', text: 'Monday-task1', isDone: false},
-      { id: 3, day: 'Tuesday', text: 'Tuesday-task2', isDone: false},
+    nonedayArray: [
+      {text: 'nonday-task1', isDone: false},
+      {text: 'nonday-task2', isDone: false},
+    ],
+    mondayArray: [
+      {text: 'monday-task1', isDone: false},
+      {text: 'monday-task2', isDone: false},
+    ],
+    tuesdayArray: [
+      {text: 'tuesday-task1', isDone: false},
+      {text: 'tuesday-task2', isDone: false},
+    ],
+    wednesdayArray: [
+      {text: 'wednesday-task1', isDone: false},
+      {text: 'wednesday-task2', isDone: false},
+    ],
+    thursdayArray: [
+      {text: 'thursday-task1', isDone: false},
+      {text: 'thursday-task2', isDone: false},
+    ],
+    fridayArray: [
+      {text: 'friday-task1', isDone: false},
+      {text: 'friday-task2', isDone: false},
+    ],
+    saturdayArray: [
+      {text: 'saturday-task1', isDone: false},
+      {text: 'saturday-task2', isDone: false},
+    ],
+    sundayArray: [
+      {text: 'sunday-task1', isDone: false},
+      {text: 'sunday-task2', isDone: false},
     ],
   },
   getters: {
-    allTasksArray: state => state.allTasksArray,
-    getTodoById: state => (id) => {
-      return state.allTasksArray.find(todo => todo.id === id);
-    },
+    nonedayArray: state => state.nonedayArray,
+    mondayArray: state => state.mondayArray,
+    tuesdayArray: state => state.tuesdayArray,
+    wednesdayArray: state => state.wednesdayArray,
+    thursdayArray: state => state.thursdayArray,
+    fridayArray: state => state.fridayArray,
+    saturdayArray: state => state.saturdayArray,
+    sundayArray: state => state.sundayArray,
+    allTasksArray: (state, getters) => {
+      const allTasksArray = [...getters.nonedayArray, ...getters.mondayArray, ...getters.tuesdayArray, ...getters.wednesdayArray, ...getters.fridayArray, ...getters.saturdayArray, ...getters.sundayArray];
+      return allTasksArray;
+    }
   }, 
   mutations: {
-    updateAllTasksArray(state, newArray) {
-      state.allTasksArray = newArray;
+    updateNonedayArray(state, newArray) {
+      state.nonedayArray = newArray;
     },
-    doDeleteTodo(state, taskId) {
-      //allTasksArrayから該当のidをもつ要素を削除して、再代入することでTodoを削除
-      state.allTasksArray = state.allTasksArray.filter( item => {
-        return item.id !== taskId;
-      });
+    updateMondayArray(state, newArray) {
+      state.mondayArray = newArray;
     },
-    doAddTodo(state, newTodo) {
-      //NewTodo.vueで作った新しいTodoをstate.allTasksArrayに追加する処理。
-      state.allTasksArray.push(newTodo);
-    }
+    updateTuesdayArray(state, newArray) {
+      state.tuesdayArray = newArray;
+    },
+    updateWednesdayArray(state, newArray) {
+      state.wednesdayArray = newArray;
+    },
+    updateThursdayArray(state, newArray) {
+      state.thursdayArray = newArray;
+    },
+    updateFridayArray(state, newArray) {
+      state.fridayArray = newArray;
+    },
+    updateSaturdayArray(state, newArray) {
+      state.saturdayArray = newArray;
+    },
+    updateSundayArray(state, newArray) {
+      state.sundayArray = newArray;
+    },
   },
 })

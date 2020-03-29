@@ -1,22 +1,25 @@
 <template>
+<div>
   <b-card-group deck>
     <draggable 
-      v-model="nonedayArray"
+      v-model="saturdayArray"
       @start="drag=true"
       @end="drag=false"
       group="weekTasks"
       >
-      <b-card class="item mr-1 mt-1" v-for="(element, index) in nonedayArray"
-      :key="element.id">
+        <b-card class="item mr-1 mt-1" v-for="(element, index) in saturdayArray" :key="element.id">
         <b-card-text>
-          {{ index +1 }} {{ element.text }}
+          <input type="checkbox" v-model="element.isDone">
+            <span :class="{done: element.isDone}">
+              {{index +1}} {{element.text}}
+            </span>
+            <span @click="doDeleteTodo(index)"><b-icon icon="x"></b-icon></span>
         </b-card-text>
       </b-card> 
     </draggable>
   </b-card-group>
-  
+</div>
 </template>
-
 <script>
 import draggable from "vuedraggable";
 export default {
@@ -28,19 +31,25 @@ export default {
       options: {
         group: "weekTasks",
         animation: 200
-      }
+      },
     }
   },
   computed: {
-    nonedayArray: {
+    saturdayArray: {
       get() {
-      return this.$store.getters.nonedayArray;
+      return this.$store.getters.saturdayArray;
     },
       set(value) {
-        this.$store.commit('updateNonedayArray', value);
+        this.$store.commit('updateSaturdayArray', value);
       }
     }
   },
+
+  methods: {
+    doDeleteTodo(index) {
+      this.saturdayArray.splice(index, 1);
+    },
+  }
 };
 </script>
 
@@ -59,6 +68,6 @@ export default {
 }
 .done {
   text-decoration: line-through;
-  color: #bbb;
+  opacity: 0.2;
 }
 </style>

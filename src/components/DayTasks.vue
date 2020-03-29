@@ -1,16 +1,15 @@
 <template>
 <div>
-  <button @click="log()">button</button>
   <b-card-group deck>
     <draggable 
       v-model="mondayArray"
       @start="drag=true"
-      @end="onEnd"
+      @end="drag=false"
       group="weekTasks"
       >
         <b-card class="item mr-1 mt-1" v-for="(element, index) in mondayArray"
       :key="element.id">
-        <b-card-text>
+        <b-card-text @click="log(index)">
           <input type="checkbox" v-model="element.isDone">
             <span :class="{done: element.isDone}">
               {{index +1}} {{element.text}}
@@ -37,29 +36,27 @@ export default {
     }
   },
   computed: {
-    allTasksArray: {
+    mondayArray: {
       get() {
-        return this.$store.getters.allTasksArray;
-      },
-      set(value) {
-        this.$store.commit('updateAllTasksArray', value);
-      }
+      return this.$store.getters.mondayArray;
     },
-    mondayArray() {
-      return this.allTasksArray.filter( dayTasks => dayTasks.day === 'Monday');
+      set(value) {
+        this.$store.commit('updateMondayArray', value);
+      }
     }
   },
 
   methods: {
-    doDeleteTodo(taskId) {
-      this.$store.commit('doDeleteTodo', taskId);
+    // doDeleteTodo(taskId) {
+    //   this.$store.commit('doDeleteTodo', taskId);
+    // },
+    doDeleteTodo(index) {
+      // this.$store.commit('doDeleteTodo', taskId);
+      this.mondayArray.splice(index, 1);
     },
-    log() {
-      console.log('MondayArray', this.mondayArray);
-    },
-    onEnd() {
-      console.log('MondayArray', this.mondayArray);
-    },
+    log(index) {
+      console.log('aaa', index);
+    }
   }
 };
 </script>

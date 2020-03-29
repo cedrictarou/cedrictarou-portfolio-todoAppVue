@@ -11,18 +11,46 @@
         </tr>
       </thead>
       <tbody>
-        <!-- <tr v-for="day in week" :key="day.id"> -->
         <tr>
           <th scope="row">Monday</th>
           <td>
-            <app-dayTasks>
-            </app-dayTasks>
+            <app-monday-cmp></app-monday-cmp>
           </td>
         </tr>
         <tr>
           <th scope="row">Tuesday</th>
           <td>
-            <app-dayTasks></app-dayTasks>
+            <app-tuesday-cmp></app-tuesday-cmp>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Wednesday</th>
+          <td>
+            <app-wednesday-cmp></app-wednesday-cmp>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Thursday</th>
+          <td>
+            <app-thursday-cmp></app-thursday-cmp>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Friday</th>
+          <td>
+            <app-friday-cmp></app-friday-cmp>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Saturday</th>
+          <td>
+            <app-saturday-cmp></app-saturday-cmp>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Sunday</th>
+          <td>
+            <app-sunday-cmp></app-sunday-cmp>
           </td>
         </tr>
       </tbody>
@@ -31,10 +59,24 @@
 </div>
 </template>
 <script>
-import DayTasks from "./DayTasks.vue";
+// import DayTasks from "./DayTasks.vue";
+import MondayCmp from "./daysCmp/MondayCmp.vue";
+import TuesdayCmp from "./daysCmp/TuesdayCmp.vue";
+import WednesdayCmp from "./daysCmp/WednesdayCmp.vue";
+import ThursdayCmp from "./daysCmp/ThursdayCmp.vue";
+import FridayCmp from "./daysCmp/FridayCmp.vue";
+import SaturdayCmp from "./daysCmp/SaturdayCmp.vue";
+import SundayCmp from "./daysCmp/SundayCmp.vue";
 export default {
   components: {
-    appDayTasks: DayTasks,
+    // appDayTasks: DayTasks,
+    appMondayCmp: MondayCmp,
+    appTuesdayCmp: TuesdayCmp,
+    appWednesdayCmp: WednesdayCmp,
+    appThursdayCmp: ThursdayCmp,
+    appFridayCmp: FridayCmp,
+    appSaturdayCmp: SaturdayCmp,
+    appSundayCmp: SundayCmp,
   },
   data() {
     return {

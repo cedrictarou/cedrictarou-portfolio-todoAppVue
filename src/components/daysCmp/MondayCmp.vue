@@ -7,11 +7,12 @@
       @end="drag=false"
       group="weekTasks"
       >
-        <b-card class="item mr-1 mt-1" v-for="(element, index) in mondayArray" :key="element.id">
+        <b-card class="item mr-1 mt-1"
+          v-for="(element, index) in mondayArray" :key="element.id">
         <b-card-text>
           <input type="checkbox" v-model="element.isDone">
             <span :class="{done: element.isDone}">
-              {{index +1}} {{element.text}}
+              {{taskIndex(index)}} {{taskText(index)}}
             </span>
             <span @click="doDeleteTodo(index)"><b-icon icon="x"></b-icon></span>
         </b-card-text>
@@ -46,6 +47,12 @@ export default {
   },
 
   methods: {
+    taskIndex(index) {
+      return index + 1;
+    },
+    taskText(index) {
+      return this.mondayArray[index].text;
+    },
     doDeleteTodo(index) {
       this.mondayArray.splice(index, 1);
     },

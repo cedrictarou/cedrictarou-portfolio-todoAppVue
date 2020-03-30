@@ -4,18 +4,16 @@
       <h3>See your progress</h3>
     </div>
     <b-progress height="2rem" :max="countItems" show-progress animated>
-    <b-progress-bar :value="doneItems" :label="`${((doneItems / countItems) * 100).toFixed(0)}%`"></b-progress-bar>
+    <b-progress-bar :value="doneItems" :label="percentage"></b-progress-bar>
    </b-progress>
   </div>
 </template>
 <script>
   export default {
-    data() {
-      return {
-        value: '',
-      }
-    },
     computed: {
+      percentage() {
+        return `${((this.doneItems / this.countItems) * 100).toFixed(0)}%`;
+      },
       allTasksArray() {
         return this.$store.getters.allTasksArray;
       },

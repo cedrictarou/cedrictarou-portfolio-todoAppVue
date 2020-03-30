@@ -59,7 +59,6 @@
 </div>
 </template>
 <script>
-// import DayTasks from "./DayTasks.vue";
 import MondayCmp from "./daysCmp/MondayCmp.vue";
 import TuesdayCmp from "./daysCmp/TuesdayCmp.vue";
 import WednesdayCmp from "./daysCmp/WednesdayCmp.vue";
@@ -69,7 +68,6 @@ import SaturdayCmp from "./daysCmp/SaturdayCmp.vue";
 import SundayCmp from "./daysCmp/SundayCmp.vue";
 export default {
   components: {
-    // appDayTasks: DayTasks,
     appMondayCmp: MondayCmp,
     appTuesdayCmp: TuesdayCmp,
     appWednesdayCmp: WednesdayCmp,
@@ -77,12 +75,6 @@ export default {
     appFridayCmp: FridayCmp,
     appSaturdayCmp: SaturdayCmp,
     appSundayCmp: SundayCmp,
-  },
-  data() {
-    return {
-      // week: ['Monday', 'Tuesday', 'Wednseday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-      week: ['Monday'],
-    }
   },
 };
 </script>

@@ -7,14 +7,13 @@
       @end="drag=false"
       group="weekTasks"
       >
-        <b-card class="item mr-1 mt-1" v-for="(element, index) in mondayArray"
-      :key="element.id">
-        <b-card-text @click="log(index)">
+        <b-card class="item mr-1 mt-1" v-for="(element, index) in mondayArray" :key="element.id">
+        <b-card-text>
           <input type="checkbox" v-model="element.isDone">
             <span :class="{done: element.isDone}">
-              {{index +1}} {{element.text}}
+              {{taskIndex(index)}} {{taskText(index)}}
             </span>
-            <span @click="doDeleteTodo(element.id)"><b-icon icon="x"></b-icon></span>
+            <span @click="doDeleteTodo(index)"><b-icon icon="x"></b-icon></span>
         </b-card-text>
       </b-card> 
     </draggable>
@@ -47,16 +46,15 @@ export default {
   },
 
   methods: {
-    // doDeleteTodo(taskId) {
-    //   this.$store.commit('doDeleteTodo', taskId);
-    // },
+    taskIndex(index) {
+      return index + 1;
+    },
+    taskText(index) {
+      return this.mondayArray[index].text;
+    },
     doDeleteTodo(index) {
-      // this.$store.commit('doDeleteTodo', taskId);
       this.mondayArray.splice(index, 1);
     },
-    log(index) {
-      console.log('aaa', index);
-    }
   }
 };
 </script>

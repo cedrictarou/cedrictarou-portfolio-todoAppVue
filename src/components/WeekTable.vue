@@ -11,13 +11,15 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">Monday</th>
+        <tr v-for="(dayName, index) in daysArray" 
+          :key="dayName.id" >
+          <th scope="row">{{ dayName.day }}</th>
           <td>
-            <app-monday-cmp></app-monday-cmp>
+            <app-day-tasks-cmp :dayArray="daysArray[index]">
+            </app-day-tasks-cmp>
           </td>
         </tr>
-        <tr>
+        <!-- <tr>
           <th scope="row">Tuesday</th>
           <td>
             <app-tuesday-cmp></app-tuesday-cmp>
@@ -28,8 +30,8 @@
           <td>
             <app-wednesday-cmp></app-wednesday-cmp>
           </td>
-        </tr>
-        <tr>
+        </tr> -->
+        <!-- <tr>
           <th scope="row">Thursday</th>
           <td>
             <app-thursday-cmp></app-thursday-cmp>
@@ -52,30 +54,48 @@
           <td>
             <app-sunday-cmp></app-sunday-cmp>
           </td>
-        </tr>
+        </tr> -->
       </tbody>
     </table>
   </div>
 </div>
 </template>
 <script>
-import MondayCmp from "./daysCmp/MondayCmp.vue";
-import TuesdayCmp from "./daysCmp/TuesdayCmp.vue";
-import WednesdayCmp from "./daysCmp/WednesdayCmp.vue";
-import ThursdayCmp from "./daysCmp/ThursdayCmp.vue";
-import FridayCmp from "./daysCmp/FridayCmp.vue";
-import SaturdayCmp from "./daysCmp/SaturdayCmp.vue";
-import SundayCmp from "./daysCmp/SundayCmp.vue";
+// import MondayCmp from "./daysCmp/MondayCmp.vue";
+// import TuesdayCmp from "./daysCmp/TuesdayCmp.vue";
+// import WednesdayCmp from "./daysCmp/WednesdayCmp.vue";
+// import ThursdayCmp from "./daysCmp/ThursdayCmp.vue";
+// import FridayCmp from "./daysCmp/FridayCmp.vue";
+// import SaturdayCmp from "./daysCmp/SaturdayCmp.vue";
+// import SundayCmp from "./daysCmp/SundayCmp.vue";
+import DayTasksCmp from "./daysCmp/DayTasksCmp.vue";
 export default {
   components: {
-    appMondayCmp: MondayCmp,
-    appTuesdayCmp: TuesdayCmp,
-    appWednesdayCmp: WednesdayCmp,
-    appThursdayCmp: ThursdayCmp,
-    appFridayCmp: FridayCmp,
-    appSaturdayCmp: SaturdayCmp,
-    appSundayCmp: SundayCmp,
+    // appMondayCmp: MondayCmp,
+    // appTuesdayCmp: TuesdayCmp,
+    // appWednesdayCmp: WednesdayCmp,
+    // appThursdayCmp: ThursdayCmp,
+    // appFridayCmp: FridayCmp,
+    // appSaturdayCmp: SaturdayCmp,
+    // appSundayCmp: SundayCmp,
+    appDayTasksCmp: DayTasksCmp,
   },
+  data() {
+    return {
+      daysArray: [
+        {day:'modnay',tasks: [
+            {task: 'aaaaa', isDone: false},
+            {task: 'bbbb', isDone: false}
+          ],
+        },
+        {day:'tuesday',tasks: [
+            {task: 'cccccc', isDone: false},
+            {task: 'dddddd', isDone: false}
+          ],
+        },
+      ]
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

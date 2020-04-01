@@ -1,6 +1,17 @@
 <template>
 <div>
   <b-card-group deck>
+    <button @click="log">button</button>
+    <draggable
+      v-model="innerDayArray"
+      >
+      <div>dayArray:{{ dayArray.tasks }}</div>
+      <div v-for="dayTask in dayArray.tasks" :key="dayTask.id">
+        task:{{ dayTask.task }}
+      </div>
+    </draggable>
+  </b-card-group>
+  <!-- <b-card-group deck>
     <draggable 
       v-model="mondayArray"
       @start="drag=true"
@@ -17,7 +28,7 @@
         </b-card-text>
       </b-card> 
     </draggable>
-  </b-card-group>
+  </b-card-group> -->
 </div>
 </template>
 <script>
@@ -25,6 +36,9 @@ import draggable from "vuedraggable";
 export default {
   components: {
     draggable,
+  },
+  props: {
+    dayArray: Array,
   },
   data() {
     return {
@@ -35,26 +49,29 @@ export default {
     }
   },
   computed: {
-    mondayArray: {
+    innerDayArray: {
       get() {
-      return this.$store.getters.mondayArray;
+      return this.dayArray.day;
     },
       set(value) {
-        this.$store.commit('updateMondayArray', value);
+        this.dayArray = value;
       }
     }
   },
 
   methods: {
-    taskIndex(index) {
-      return index + 1;
-    },
-    taskText(index) {
-      return this.mondayArray[index].text;
-    },
-    doDeleteTodo(index) {
-      this.mondayArray.splice(index, 1);
-    },
+    log() {
+      console.log(this.innerDayArray);
+    }
+    // taskIndex(index) {
+    //   return index + 1;
+    // },
+    // taskText(index) {
+    //   return this.mondayArray[index].text;
+    // },
+    // doDeleteTodo(index) {
+    //   this.mondayArray.splice(index, 1);
+    // },
   }
 };
 </script>

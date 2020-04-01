@@ -2,13 +2,13 @@
 <div>
   <b-card-group deck>
     <draggable 
-      v-model="mondayArray"
+      v-model="innerDaysArray"
       @start="drag=true"
       @end="drag=false"
       group="weekTasks"
       >
         <b-card class="item mr-1 mt-1"
-          v-for="(element, index) in mondayArray" :key="element.id">
+          v-for="(element, index) in innerDaysArray" :key="element.id">
         <b-card-text>
           <input type="checkbox" v-model="element.isDone">
             <span :class="{done: element.isDone}">
@@ -27,6 +27,7 @@ export default {
   components: {
     draggable,
   },
+  props: ['daysArray'],
   data() {
     return {
       options: {
@@ -36,6 +37,14 @@ export default {
     }
   },
   computed: {
+    innerDaysArray: {
+      get() {
+        return this.daysArray;
+      },
+      set(value) {
+        this.$emit('change', value);
+      }
+    },
     mondayArray: {
       get() {
       return this.$store.getters.mondayArray;

@@ -1,7 +1,12 @@
 <template>
   <div>
     <div class="progress_area">
-      <h3>See your progress</h3>
+      <b-row>
+        <b-col class="mb-2">
+          <span>Your Progress</span>
+          <b-button @click="purge" class="float-right" variant="outline-primary" size="sm">Purge!</b-button>
+        </b-col>
+      </b-row>
     </div>
     <b-progress height="2rem" :max="countItems" show-progress animated>
     <b-progress-bar :value="doneItems" :label="percentage"></b-progress-bar>
@@ -27,6 +32,14 @@
         return doneTodosArray.length;
       }
     },
+    methods: {
+      purge() {
+        if(!confirm('Delete all finished todos?')) {
+          return;
+        }
+        this.$store.commit('purgeTasks');
+      },
+    }
   }
 </script>
 <style lang="scss" scoped>

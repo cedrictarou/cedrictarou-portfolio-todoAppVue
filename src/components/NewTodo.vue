@@ -2,7 +2,6 @@
   <div>
     <div>
       <h3>Just type what you have to do.</h3>
-      <p>頭に思いつくままにタスクを入力しましょう。</p>
     </div>
     <b-form-input
       v-model="inputTask"
@@ -38,16 +37,12 @@
           return ;
         } 
         const todo = {
-          // id: this.allTasksArray.length,
           day: 'none',
           text: this.inputTask,
           isDone: false,
         };
         this.nonedayArray.push(todo);
         this.inputTask = '';
-        //mutationsで処理するように変更必要
-        // this.$store.commit('doAddTodo', todo);
-        // this.inputTask = '';
       },
     }
   }

@@ -6,17 +6,26 @@
       @start="drag=true"
       @end="drag=false"
       group="weekTasks"
+      :animation="200"
       >
-        <b-card class="item mr-1 mt-1" v-for="(element, index) in tuesdayArray"
-      :key="element.id">
-        <b-card-text>
-          <input type="checkbox" v-model="element.isDone">
-            <span :class="{done: element.isDone}">
-              {{index +1}} {{element.text}}
-            </span>
-            <span @click="doDeleteTodo(index)"><b-icon icon="x"></b-icon></span>
-        </b-card-text>
-      </b-card> 
+        <transition-group mode="out-in"
+          type="transition" 
+          :name="!drag ? 'flip-list' : null">
+          <b-card class="item mr-1 mt-1"
+            v-for="(element, index) in tuesdayArray" 
+            :key="index">
+            <b-card-text>
+              <input type="checkbox" 
+                v-model="element.isDone">
+                <span :class="{done: element.isDone}">
+                  {{taskIndex(index)}} {{taskText(index)}}
+                </span>
+                <span @click="doDeleteTodo(index)">
+                  <b-icon icon="x"></b-icon>
+                </span>
+            </b-card-text>
+          </b-card> 
+        </transition-group>
     </draggable>
   </b-card-group>
 </div>
@@ -31,8 +40,8 @@ export default {
     return {
       options: {
         group: "weekTasks",
-        animation: 200
       },
+      drag: false
     }
   },
   computed: {
@@ -47,6 +56,12 @@ export default {
   },
 
   methods: {
+    taskIndex(index) {
+      return index + 1;
+    },
+    taskText(index) {
+      return this.tuesdayArray[index].text;
+    },
     doDeleteTodo(index) {
       this.tuesdayArray.splice(index, 1);
     },
@@ -70,5 +85,20 @@ export default {
 .done {
   text-decoration: line-through;
   opacity: 0.2;
+}
+/* アニメーション */
+/* 1秒かけて透明度を遷移 */
+.flip-enter-active, .flip-leave-active {
+  transition: opacity 1s;
+}
+/* 見えなくなるときの透明度 */
+.flip-enter, .flip-leave-to {
+  opacity: 0;
+}
+.flip-list-move {
+  transition: transform 0.5s;
+}
+.no-move {
+  transition: transform 0s;
 }
 </style>

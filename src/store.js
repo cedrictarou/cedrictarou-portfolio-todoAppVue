@@ -7,35 +7,27 @@ export default new Vuex.Store({
   state: {
     nonedayArray: [
       {text: 'nonday-task1', isDone: false},
-      {text: 'nonday-task2', isDone: false},
     ],
     mondayArray: [
       {text: 'monday-task1', isDone: false},
-      {text: 'monday-task2', isDone: false},
     ],
     tuesdayArray: [
       {text: 'tuesday-task1', isDone: false},
-      {text: 'tuesday-task2', isDone: false},
     ],
     wednesdayArray: [
       {text: 'wednesday-task1', isDone: false},
-      {text: 'wednesday-task2', isDone: false},
     ],
     thursdayArray: [
       {text: 'thursday-task1', isDone: false},
-      {text: 'thursday-task2', isDone: false},
     ],
     fridayArray: [
       {text: 'friday-task1', isDone: false},
-      {text: 'friday-task2', isDone: false},
     ],
     saturdayArray: [
       {text: 'saturday-task1', isDone: false},
-      {text: 'saturday-task2', isDone: false},
     ],
     sundayArray: [
       {text: 'sunday-task1', isDone: false},
-      {text: 'sunday-task2', isDone: false},
     ],
   },
   getters: {
@@ -77,5 +69,28 @@ export default new Vuex.Store({
     updateSundayArray(state, newArray) {
       state.sundayArray = newArray;
     },
+    purgeTasks(state) {
+      // const array = [state.mondayArray, state.tuesdayArray];
+      // for (let i = 0; i <= array.length; i++) {
+      //   array[i] = array[i].filter(item => !item.isDone);
+      //   console.log(array[i]);
+      // }
+      
+        const remainingMonday = state.mondayArray.filter(item => !item.isDone);
+        state.mondayArray = remainingMonday;  
+        const remainingTuesday = state.tuesdayArray.filter(item => !item.isDone);
+        state.tuesdayArray = remainingTuesday;  
+        const remainingWednesday = state.wednesdayArray.filter(item => !item.isDone);
+        state.wednesdayArray = remainingWednesday;  
+        const remainingThursday = state.thursdayArray.filter(item => !item.isDone);
+        state.thursdayArray = remainingThursday;
+        const remainingFriday = state.fridayArray.filter(item => !item.isDone);
+        state.fridayArray = remainingFriday;
+        const remainingSaturday = state.saturdayArray.filter(item => !item.isDone);
+        state.saturdayArray = remainingSaturday;
+        const remainingSunday = state.sundayArray.filter(item => !item.isDone);
+        state.sundayArray = remainingSunday;
+        
+    }
   },
 })
